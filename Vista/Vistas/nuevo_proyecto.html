@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Registrar Nuevo Proyecto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 🎨 ESTILOS -->
+  <style>
+    :root {
+      --card-bg: #ffffff;
+      --bg: #f3f5f8;
+      --accent: #0b74df;
+      --danger: #dc3545;
+      --success: #28a745;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      padding: 22px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #111827;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    input, select, textarea, button {
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #E5E7EB;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    button.secondary {
+      background: #eef2ff;
+      color: var(--accent);
+      border: 1px solid #dbeafe;
+    }
+
+    .footer {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .msg {
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .msg.success {
+      background: rgba(40,167,69,0.08);
+      color: var(--success);
+      border: 1px solid rgba(40,167,69,0.12);
+    }
+
+    .msg.error {
+      background: rgba(220,53,69,0.06);
+      color: var(--danger);
+      border: 1px solid rgba(220,53,69,0.1);
+    }
+
+    .panel {
+      background: #f9fafb;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #eef2f6;
+    }
+
+    .panel h2 {
+      font-size: 15px;
+      color: #1f2937;
+      margin-top: 0;
+    }
+
+    @media (max-width: 880px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Registrar Nuevo Proyecto</h1>
+
+    <div class="grid">
+      <!-- 🧾 FORMULARIO PRINCIPAL -->
+      <div>
+        <form id="formNuevoProyecto" autocomplete="off">
+          <label for="titulo">Título del Proyecto *</label>
+          <input id="titulo" name="titulo" type="text" required placeholder="Ej: Sistema para monitoreo de cultivos">
+
+          <label for="tipo_id">Tipo de Proyecto *</label>
+          <select id="tipo_id" name="tipo_id" required>
+            <option value="">Cargando tipos...</option>
+          </select>
+
+          <label for="linea_id">Línea de Investigación *</label>
+          <select id="linea_id" name="linea_id" required>
+            <option value="">Cargando líneas...</option>
+          </select>
+
+          <label for="objetivo_general">Objetivo General</label>
+          <textarea id="objetivo_general" name="objetivo_general" placeholder="Describe el objetivo general"></textarea>
+
+          <label for="beneficiarios">Beneficiarios</label>
+          <textarea id="beneficiarios" name="beneficiarios" placeholder="Quiénes se beneficiarán"></textarea>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label for="fecha_inicio">Fecha Inicio *</label>
+              <input id="fecha_inicio" name="fecha_inicio" type="date" required>
+            </div>
+            <div>
+              <label for="fecha_fin">Fecha Fin *</label>
+              <input id="fecha_fin" name="fecha_fin" type="date" required>
+            </div>
+          </div>
+
+          <div class="footer">
+            <button id="btnSubmit" type="submit">Registrar Proyecto</button>
+            <button id="btnReset" type="button" class="secondary">Limpiar</button>
+            <div id="status" style="flex:1"></div>
+          </div>
+        </form>
+
+        <div id="messageContainer" style="margin-top:12px"></div>
+      </div>
+
+      <!-- 🧍 PANEL LATERAL DE DOCENTE -->
+      <div class="panel">
+        <h2>Docente Simulado</h2>
+        <p style="font-size:13px; color:#4b5563;">Guarda un <b>usuario_id</b> para simular que estás logueado.</p>
+        <label for="simDocente">UUID del Usuario</label>
+        <input id="simDocente" type="text" placeholder="Ej: 123e4567-e89b-12d3-a456-426614174000">
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button id="btnGuardarDocente" type="button">Guardar</button>
+          <button id="btnQuitarDocente" type="button" class="secondary">Quitar</button>
+        </div>
+        <div id="infoDocente" style="margin-top:8px; font-size:13px; color:#374151;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⚙️ SCRIPT -->
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // ==========================
+    // 🔧 CONFIGURACIÓN SUPABASE
+    // ==========================
+    const SUPABASE_URL = 'https://yzrvqpzefjxfitwmbceg.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6cnZxcHplZmp4Zml0d21iY2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzMDg1MTEsImV4cCI6MjA3Nzg4NDUxMX0.ezg4W5DCcX9mgu1Emap5BgqbwcKJZX5k-N8z4LzJwgo';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // ==========================
+    // 🎯 ELEMENTOS
+    // ==========================
+    const form = document.getElementById('formNuevoProyecto');
+    const tipoSelect = document.getElementById('tipo_id');
+    const lineaSelect = document.getElementById('linea_id');
+    const status = document.getElementById('status');
+    const messageContainer = document.getElementById('messageContainer');
+    const btnReset = document.getElementById('btnReset');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const simDocenteInput = document.getElementById('simDocente');
+    const btnGuardarDocente = document.getElementById('btnGuardarDocente');
+    const btnQuitarDocente = document.getElementById('btnQuitarDocente');
+    const infoDocente = document.getElementById('infoDocente');
+
+    // ==========================
+    // 💬 UTILIDADES
+    // ==========================
+    const showMessage = (text, type = 'success', seconds = 5) => {
+      messageContainer.innerHTML = `
+        <div class="msg ${type === 'success' ? 'success' : 'error'}">${text}</div>`;
+      if (seconds > 0) setTimeout(() => messageContainer.innerHTML = '', seconds * 1000);
+    };
+
+    const escapeHtml = str => String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+    const validarFechas = (inicio, fin) => {
+      if (!inicio || !fin) return false;
+      return new Date(inicio) < new Date(fin);
+    };
+
+    // ==========================
+    // 📦 CARGAR SELECTS
+    // ==========================
+    async function cargarSelects() {
+      try {
+        const { data: tipos } = await supabase.from('tipos_proyecto').select('id, nombre').order('id');
+        tipoSelect.innerHTML = tipos?.length
+          ? `<option value="">-- Seleccione un tipo --</option>` +
+            tipos.map(t => `<option value="${t.id}">${escapeHtml(t.nombre)}</option>`).join('')
+          : `<option value="">No hay tipos registrados</option>`;
+
+        const { data: lineas } = await supabase.from('lineas_investigacion').select('id, nombre').order('id');
+        lineaSelect.innerHTML = lineas?.length
+          ? `<option value="">-- Seleccione una línea --</option>` +
+            lineas.map(l => `<option value="${l.id}">${escapeHtml(l.nombre)}</option>`).join('')
+          : `<option value="">No hay líneas registradas</option>`;
+      } catch (err) {
+        console.error('Error cargando selects:', err);
+        tipoSelect.innerHTML = `<option value="">Error</option>`;
+        lineaSelect.innerHTML = `<option value="">Error</option>`;
+        showMessage('Error al cargar datos desde la base de datos.', 'error', 8);
+      }
+    }
+
+    // ==========================
+    // 💾 GUARDAR PROYECTO
+    // ==========================
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Guardando...';
+      btnSubmit.disabled = true;
+
+      const data = {
+        titulo: form.titulo.value.trim(),
+        tipo_id: form.tipo_id.value,
+        linea_id: form.linea_id.value,
+        objetivo_general: form.objetivo_general.value.trim(),
+        beneficiarios: form.beneficiarios.value.trim(),
+        fecha_inicio: form.fecha_inicio.value,
+        fecha_fin: form.fecha_fin.value
+      };
+
+      if (!data.titulo || !data.tipo_id || !data.linea_id || !data.fecha_inicio || !data.fecha_fin) {
+        showMessage('Completa todos los campos obligatorios.', 'error', 6);
+        status.textContent = '';
+        btnSubmit.disabled = false;
+        return;
+      }
+
+      if (!validarFechas(data.fecha_inicio, data.fecha_fin)) {
+        showMessage('La fecha de inicio debe ser anterior a la de fin.', 'error', 6);
+        status.textContent = '';
+        btnSubmit.disabled = false;
+        return;
+      }
+
+      const usuario_id = sessionStorage.getItem('usuario_id');
+      if (!usuario_id) {
+        showMessage('No hay usuario autenticado. Usa el panel lateral.', 'error', 6);
+        status.textContent = '';
+        btnSubmit.disabled = false;
+        return;
+      }
+
+      try {
+        const { error } = await supabase.from('proyectos').insert([{
+          titulo: data.titulo,
+          tipo_id: Number(data.tipo_id),
+          linea_id: Number(data.linea_id),
+          objetivo_general: data.objetivo_general,
+          beneficiarios: data.beneficiarios,
+          fecha_inicio: data.fecha_inicio,
+          fecha_fin: data.fecha_fin
+        }]);
+
+        if (error) throw error;
+        showMessage('Proyecto registrado con éxito ✅', 'success', 6);
+        form.reset();
+      } catch (err) {
+        console.error('Error insertando proyecto:', err);
+        showMessage('Error al registrar el proyecto.', 'error', 8);
+      } finally {
+        status.textContent = '';
+        btnSubmit.disabled = false;
+      }
+    });
+
+    // ==========================
+    // 🧹 LIMPIAR FORMULARIO
+    // ==========================
+    btnReset.addEventListener('click', () => form.reset());
+
+    // ==========================
+    // 👨‍🏫 DOCENTE SIMULADO
+    // ==========================
+    btnGuardarDocente.addEventListener('click', () => {
+      const v = simDocenteInput.value.trim();
+      if (!v) {
+        showMessage('Ingresa un UUID válido.', 'error', 5);
+        return;
+      }
+      sessionStorage.setItem('usuario_id', v);
+      infoDocente.textContent = `Usuario activo: ${v}`;
+      showMessage('Usuario guardado en sessionStorage ✔️', 'success', 4);
+    });
+
+    btnQuitarDocente.addEventListener('click', () => {
+      sessionStorage.removeItem('usuario_id');
+      simDocenteInput.value = '';
+      infoDocente.textContent = '';
+      showMessage('Usuario eliminado de sessionStorage', 'success', 4);
+    });
+
+    // ==========================
+    // 🚀 INICIALIZACIÓN
+    // ==========================
+    (async function init() {
+      await cargarSelects();
+      const existing = sessionStorage.getItem('usuario_id');
+      if (existing) infoDocente.textContent = `Usuario activo: ${existing}`;
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Generar Hash</title>
+<script src="../Recursos/Librerias/bcrypt.min.js"></script>
+</head>
+<body>
+
+<h2>Generar Hash Bcrypt</h2>
+
+<input type="text" id="txt" value="123456">
+<button onclick="gen()">Generar</button>
+
+<p id="out" style="font-weight:bold;font-size:18px;color:red;"></p>
+
+<script>
+function gen(){
+    let pass = document.getElementById('txt').value;
+    let hash = bcrypt.hashSync(pass, 10);
+    document.getElementById('out').innerText = hash;
+    console.log(hash);
+}
+</script>
+
+</body>
+</html>
