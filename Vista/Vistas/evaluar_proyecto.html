@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluar Proyecto</title>
+    <link rel="stylesheet" href="../Recurso/Css/evaluar_proyecto.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- CONTENIDO DEL PROYECTO -->
+    <section class="proyecto-detalle" id="proyectoDetalle">
+        <h2>Detalles del Proyecto</h2>
+        <p><strong>Título:</strong> <span id="p_titulo"></span></p>
+        <p><strong>Tipo:</strong> <span id="p_tipo"></span></p>
+        <p><strong>Línea:</strong> <span id="p_linea"></span></p>
+        <p><strong>Objetivo General:</strong></p>
+        <p id="p_objetivo"></p>
+        <p><strong>Beneficiarios:</strong></p>
+        <p id="p_beneficiarios"></p>
+        <p><strong>Fecha Inicio:</strong> <span id="p_inicio"></span></p>
+        <p><strong>Fecha Fin:</strong> <span id="p_fin"></span></p>
+        <p><strong>Estado Actual:</strong> <span id="p_estado"></span></p>
+    </section>
+
+    <!-- FORMULARIO DE EVALUACIÓN -->
+    <section class="evaluacion">
+
+        <h2>Formulario de Evaluación</h2>
+
+        <form id="formEvaluacion">
+
+            <!-- Preguntas -->
+            <div class="pregunta">
+                <label>1. El título refleja el contenido del problema</label>
+                <select name="c1" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>2. Dedicación correcta (parte inferior derecha)</label>
+                <select name="c2" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>3. Agradecimiento ubicado correctamente</label>
+                <select name="c3" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>4. Realiza tabla de contenidos</label>
+                <select name="c4" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>5. Introducción clara del tema</label>
+                <select name="c5" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>6. Introducción menciona objetivo de investigación</label>
+                <select name="c6" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <div class="pregunta">
+                <label>7. Introducción presenta esquema del contenido</label>
+                <select name="c7" required>
+                    <option value="">Seleccione…</option>
+                    <option value="1">Sí cumple</option>
+                    <option value="0">No cumple</option>
+                </select>
+            </div>
+
+            <!-- Observaciones -->
+            <label>Observaciones</label>
+            <textarea name="observaciones" rows="4"></textarea>
+
+            <button type="submit" class="btn-guardar">Guardar Evaluación</button>
+
+        </form>
+    </section>
+
+</div>
+
+<script type="module" src="../JavaScript/evaluar_proyecto.js"></script>
+
+</body>
+</html>

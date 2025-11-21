@@ -1,0 +1,77 @@
+body {
+    background-color: #eef6fa;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 850px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #0077b6;
+    margin-bottom: 25px;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+    color: #003049;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+    height: 90px;
+}
+
+.fechas {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#btnRegistrar {
+    background-color: #0077b6;
+    color: white;
+    width: 48%;
+}
+
+#btnRegistrar:hover {
+    background-color: #005f87;
+}
+
+#btnLimpiar {
+    background-color: #adb5bd;
+    color: black;
+    width: 48%;
+}
+
+#btnLimpiar:hover {
+    background-color: #6c757d;
+}
+

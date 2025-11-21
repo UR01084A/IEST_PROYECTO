@@ -1,0 +1,437 @@
+/* ==========================================
+   GLOBAL SETTINGS
+========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background: #f4f6fa;
+    color: #333;
+}
+
+/* ==========================================
+   NAVBAR
+========================================== */
+.navbar {
+    width: 100%;
+    background: white;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.logo {
+    width: 40px;
+}
+
+.menu {
+    display: flex;
+    gap: 22px;
+}
+
+.menu a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #555;
+    padding-bottom: 4px;
+    transition: 0.2s;
+}
+
+.menu a:hover {
+    color: #007bff;
+}
+
+.menu .active {
+    border-bottom: 3px solid #007bff;
+    color: #007bff;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.btn-cerrar {
+    background: #ff4b4b;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-cerrar:hover {
+    background: #e23a3a;
+}
+
+/* ==========================================
+   CONTENIDO PRINCIPAL
+========================================== */
+.content {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.seccion {
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 25px;
+}
+
+.tarjeta {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* ==========================================
+   TITULO DE BIENVENIDA
+========================================== */
+#bienvenidaTexto {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1f3b76;
+    text-align: center;
+}
+
+/* ==========================================
+   TARJETAS DE MÉTRICAS
+========================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.card-metric {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.card-metric p {
+    font-size: 14px;
+    color: #666;
+}
+
+.card-metric h2 {
+    font-size: 26px;
+}
+
+.icono-card {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: white;
+}
+
+.azul { background: #007bff; }
+.naranja { background: #ff9800; }
+.verde { background: #28a745; }
+
+/* ==========================================
+   GRAFICOS
+========================================== */
+.graficos-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    width: 100%;
+}
+
+.grafico-item {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: .2s ease;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+.grafico-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+.grafico-item .titulo-seccion {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1f3b76;
+}
+
+.grafico-item canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    max-height: 320px;
+}
+
+/* ==========================================
+   TABLAS
+========================================== */
+.tabla-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+}
+
+.tabla thead {
+    background: #007bff;
+    color: white;
+}
+
+.tabla th, .tabla td {
+    padding: 14px;
+    font-size: 15px;
+    border-bottom: 1px solid #ececec;
+}
+
+/* Hover */
+.tabla tbody tr:hover {
+    background: #eef5ff;
+}
+
+/* ==========================================
+   ESTADOS
+========================================== */
+.estado-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.estado-enviado { background: #d0e7ff; color: #0357a8; }
+.estado-evaluado { background: #d4ffdc; color: #0f7a2d; }
+.estado-observado { background: #ffe4d4; color: #a84300; }
+
+/* ==========================================
+   BOTONES ACCIÓN + RIPPLE
+========================================== */
+
+.btn-accion {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    transition: 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.btn-ver { background: #3498db; }
+.btn-ver:hover { background: #217dbb; }
+
+.btn-print { background: #9b59b6; }
+.btn-print:hover { background: #7e3fa0; }
+
+.btn-archivo { background: #2ecc71; }
+.btn-archivo:hover { background: #239b56; }
+
+.btn-informe { background: #e67e22; }
+.btn-informe:hover { background: #ca6a17; }
+
+/* Ripple */
+.btn-accion::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(102, 23, 23, 0.6);
+    opacity: 0;
+    border-radius: 50%;
+    transform: scale(1);
+    pointer-events: none;
+}
+
+.btn-accion:active::after {
+    transform: scale(35);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.8s;
+}
+
+/* ==========================================
+   INPUTS Y BOTONES
+========================================== */
+label {
+    margin: 10px 0 4px;
+    font-weight: 600;
+    display: block;
+}
+
+input[type="file"],
+select {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 10px 16px;
+    color: rgb(100, 33, 33);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #0065d1;
+}
+
+/* ==========================================
+   MODALES
+========================================== */
+.modal-visor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+}
+
+.modal-box,
+.visor-box {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    width: 85%;
+    max-width: 900px;
+    max-height: 90%;
+    overflow-y: auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    animation: fadeIn .25s ease;
+}
+
+.visor-box iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    background: #0b7d4c;
+    border-radius: 10px;
+}
+
+.btn-cerrar-modal {
+    margin-top: 15px;
+    background: #ff4b4b;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    align-self: flex-end;
+}
+
+.btn-cerrar-modal:hover {
+    background: #d93636;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+@media (max-width: 1100px) {
+    .graficos-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 780px) {
+    .graficos-container { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .grafico-item { padding: 15px; }
+}
+
+
+.estado-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.estado-enviado {
+    background: #d0e7ff;
+    color: #0357a8;
+}
+
+.estado-evaluado {
+    background: #d4ffdc;
+    color: #0f7a2d;
+}
+
+.estado-observado {
+    background: #ffe4d4;
+    color: #a84300;
+}

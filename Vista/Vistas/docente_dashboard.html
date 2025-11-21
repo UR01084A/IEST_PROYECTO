@@ -1,384 +1,232 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard – Docente Investigador</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    body{background:#f6f8fb}
-    .nav-link.active, .btn-filter.active{background:#0ea5e9!important;color:#fff!important;border-color:#0ea5e9!important}
-    .badge-pill{border-radius:999px;padding:.35rem .6rem}
-    .table thead th{white-space:nowrap}
-    .btn-icon{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}
-    .card-kpi{border-width:3px}
-    .uploader .nav-link{border-radius:999px}
-    .uploader .nav-link.active{background:#e0f2fe;color:#0369a1}
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Docente</title>
+
+    <!-- Fuentes e íconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+    <!-- Toastify -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="../Recurso/Css/dashboard_docente.css">
+
+    <style>
+    
+
+        /* Visor modal */
+        .modal-visor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+        .visor-box {
+            width: 80%;
+            height: 85%;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .visor-box iframe {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+            border-radius: 8px;
+        }
+        .btn-cerrar-modal {
+            margin-top: 12px;
+            padding: 10px;
+            background: #ff3b3b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
+
 <body>
 
-  <nav class="navbar navbar-expand-lg bg-dark border-bottom border-info sticky-top shadow-lg">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-info" href="#">
-        <i class="bi bi-mortarboard-fill"></i> Investigación
-      </a>
-      <button class="navbar-toggler bg-info" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navItems">
-        <ul class="navbar-nav me-auto fw-semibold small">
-          <li class="nav-item"><a class="nav-link text-white active" href="#">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#">Mis Proyectos</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#">Nuevo Proyecto</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#">Perfil</a></li>
-        </ul>
-        <div class="d-flex align-items-center gap-3">
-          <span id="lblUsuario" class="text-white fw-bold small"></span>
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="navbar-left">
+        <img src="../Recurso/img/logo.png" class="logo" alt="Logo">
+        <h2>Investigación</h2>
 
-          <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center" style="width:40px;height:40px">
-            <i class="bi bi-person-fill"></i>
-          </div>
-          <button class="btn btn-danger btn-sm">Cerrar sesión</button>
-        </div>
-      </div>
+        <nav class="menu">
+            <a href="#" class="active">Inicio</a>
+            <a href="../Vistas/NuevoProyecto.html">Nuevo Proyecto</a>
+            <a href="perfil.html">Perfil</a>
+        </nav>
     </div>
-  </nav>
 
-  <main class="container-xxl py-4">
-
-    <section class="row g-4 mb-4">
-      <div class="col-md-4">
-        <div class="card card-kpi shadow border-info">
-          <div class="card-body text-center">
-            <i class="bi bi-folder2-open fs-1 text-primary"></i>
-            <div class="fw-semibold mt-2">Proyectos Activos</div>
-            <div id="kpiActivos" class="display-5 fw-bold text-info">0</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card card-kpi shadow border-info">
-          <div class="card-body text-center">
-            <i class="bi bi-clipboard-check fs-1 text-info"></i>
-            <div class="fw-semibold mt-2">En Evaluación</div>
-            <div id="kpiEvaluacion" class="display-5 fw-bold text-info">0</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card card-kpi shadow border-success">
-          <div class="card-body text-center">
-            <i class="bi bi-patch-check fs-1 text-success"></i>
-            <div class="fw-semibold mt-2">Aprobados</div>
-            <div id="kpiAprobados" class="display-5 fw-bold text-success">0</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mb-3">
-      <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-        <div class="btn-group" role="group" aria-label="Filtros">
-          <button class="btn btn-outline-secondary btn-filter active" data-filter="todos"><i class="bi bi-ui-checks-grid me-1"></i>Todos</button>
-          <button class="btn btn-outline-secondary btn-filter" data-filter="registrado"><i class="bi bi-play-circle me-1"></i>Activos</button>
-          <button class="btn btn-outline-secondary btn-filter" data-filter="en_evaluacion"><i class="bi bi-hourglass-split me-1"></i>En evaluación</button>
-          <button class="btn btn-outline-secondary btn-filter" data-filter="aprobado"><i class="bi bi-patch-check me-1"></i>Aprobados</button>
-        </div>
-        <div class="ms-auto d-flex align-items-center gap-2">
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-search"></i></span>
-            <input id="txtBuscar" type="text" class="form-control" placeholder="Buscar proyecto">
-            <button id="btnClear" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i></button>
-          </div>
-          <button id="btnImprimir" class="btn btn-outline-dark"><i class="bi bi-printer me-1"></i>Imprimir</button>
-        </div>
-      </div>
-
-      <div class="card shadow">
-        <div class="card-header bg-info text-dark fw-semibold">
-          <i class="bi bi-card-checklist"></i> Mis Proyectos (general)
-        </div>
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0" id="tablaProyectos">
-            <thead class="table-info text-dark">
-              <tr>
-                <th>Proyecto</th>
-                <th>Tipo</th>
-                <th>Línea</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th class="text-center">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="tbodyProyectos">
-              <tr data-estado="registrado">
-                <td>Sistema de Monitoreo de Cultivos con IA</td>
-                <td>Investigación</td>
-                <td>Inteligencia Artificial</td>
-                <td><span class="badge text-bg-primary badge-pill">registrado</span></td>
-                <td>07/11/2025</td>
-                <td class="text-center">
-                  <button class="btn btn-outline-primary btn-sm btn-icon me-1" data-edit data-id="p1"><i class="bi bi-pencil-square"></i></button>
-                  <a href="#" class="btn btn-outline-secondary btn-sm btn-icon me-1" title="Ver"><i class="bi bi-box-arrow-up-right"></i></a>
-                  <button class="btn btn-outline-success btn-sm btn-icon" data-upload data-id="p1"><i class="bi bi-upload"></i></button>
-                </td>
-              </tr>
-              <tr data-estado="en_evaluacion">
-                <td>App de Reciclaje</td>
-                <td>Innovación</td>
-                <td>Desarrollo Sostenible</td>
-                <td><span class="badge text-bg-warning text-dark badge-pill">en_evaluación</span></td>
-                <td>08/11/2025</td>
-                <td class="text-center">
-                  <button class="btn btn-outline-primary btn-sm btn-icon me-1" data-edit data-id="p2"><i class="bi bi-pencil-square"></i></button>
-                  <a href="#" class="btn btn-outline-secondary btn-sm btn-icon me-1"><i class="bi bi-box-arrow-up-right"></i></a>
-                  <button class="btn btn-outline-success btn-sm btn-icon" data-upload data-id="p2"><i class="bi bi-upload"></i></button>
-                </td>
-              </tr>
-              <tr data-estado="aprobado">
-                <td>Plataforma de Gestión Docente</td>
-                <td>Innovación</td>
-                <td>Educación y Tecnología</td>
-                <td><span class="badge text-bg-success badge-pill">aprobado</span></td>
-                <td>07/11/2025</td>
-                <td class="text-center">
-                  <button class="btn btn-outline-primary btn-sm btn-icon me-1" data-edit data-id="p3"><i class="bi bi-pencil-square"></i></button>
-                  <a href="#" class="btn btn-outline-secondary btn-sm btn-icon me-1"><i class="bi bi-box-arrow-up-right"></i></a>
-                  <button class="btn btn-outline-success btn-sm btn-icon" data-upload data-id="p3"><i class="bi bi-upload"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-4">
-      <div class="card shadow uploader">
-        <div class="card-header bg-info text-dark fw-semibold">
-          <i class="bi bi-cloud-arrow-up"></i> Entregas del Proyecto
-        </div>
-        <div class="card-body">
-          <div class="row g-3 mb-2">
-            <div class="col-md-6">
-              <label class="form-label">Proyecto</label>
-              <select id="selProyecto" class="form-select">
-                <option value="">Selecciona un proyecto…</option>
-                <option value="p1">Sistema de Monitoreo de Cultivos con IA</option>
-                <option value="p2">App de Reciclaje</option>
-                <option value="p3">Plataforma de Gestión Docente</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Estado del Proyecto</label>
-              <input id="estadoProyecto" class="form-control" placeholder="—" disabled>
-            </div>
-          </div>
-
-          <ul class="nav nav-pills gap-2 flex-wrap mb-3" id="tabsEntregas">
-            <li class="nav-item"><button class="nav-link active" data-stage="1">1er avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="2">2do avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="3">3er avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="4">4to avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="5">5to avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="6">6to avance</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="informe">Informe final</button></li>
-            <li class="nav-item"><button class="nav-link" data-stage="articulo">Artículo científico</button></li>
-          </ul>
-
-          <div class="mb-2 small text-muted" id="etiquetaEtapa">Subir archivo a: 1er avance</div>
-
-          <div class="input-group">
-            <input id="fileEntrega" type="file" class="form-control" accept=".pdf,.doc,.docx">
-            <button id="btnSubirEntrega" class="btn btn-primary"><i class="bi bi-cloud-arrow-up me-1"></i>Subir</button>
-          </div>
-
-          <div class="alert alert-info mt-3 py-2 mb-0">
-            <i class="bi bi-info-circle"></i> Formatos aceptados: .pdf, .doc, .docx
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Editar proyecto</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="formEditar" class="row g-3">
-            <input type="hidden" id="editId">
-            <div class="col-12">
-              <label class="form-label">Título</label>
-              <input id="editTitulo" class="form-control" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Tipo</label>
-              <select id="editTipo" class="form-select">
-                <option>Investigación</option>
-                <option>Innovación</option>
-                <option>Tesis</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Línea</label>
-              <select id="editLinea" class="form-select">
-                <option>Inteligencia Artificial</option>
-                <option>Desarrollo Sostenible</option>
-                <option>Educación y Tecnología</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Fecha inicio</label>
-              <input id="editInicio" type="date" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Fecha fin</label>
-              <input id="editFin" type="date" class="form-control">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Objetivo general</label>
-              <textarea id="editObjetivo" class="form-control" rows="2"></textarea>
-            </div>
-            <div class="col-12">
-              <label class="form-label">Beneficiarios</label>
-              <textarea id="editBenef" class="form-control" rows="2"></textarea>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Estado</label>
-              <select id="editEstado" class="form-select">
-                <option value="registrado">registrado</option>
-                <option value="en_evaluacion">en_evaluación</option>
-                <option value="aprobado">aprobado</option>
-                <option value="desaprobado">desaprobado</option>
-              </select>
-            </div>
-            <div class="col-md-6 d-flex align-items-end">
-              <div class="alert alert-warning w-100 py-2 mb-0 small" id="msgBloqueo" style="display:none">
-                Edición bloqueada: proyecto aprobado/desaprobado.
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button id="btnGuardarEdit" class="btn btn-primary">Guardar cambios</button>
-        </div>
-      </div>
+    <div class="navbar-right">
+        <span id="nombreDocenteNavbar">Docente</span>
+        <img src="../Recurso/img/usuario.png" class="avatar">
+        <button id="btnCerrarSesion" class="btn-cerrar">Cerrar Sesión</button>
     </div>
-  </div>
+</header>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const tbody = document.getElementById('tbodyProyectos');
-    const txtBuscar = document.getElementById('txtBuscar');
-    const btnClear = document.getElementById('btnClear');
-    const btnImprimir = document.getElementById('btnImprimir');
-    const filtroBtns = document.querySelectorAll('.btn-filter');
-    const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
-    const form = document.getElementById('formEditar');
-    const editEstado = document.getElementById('editEstado');
-    const bloquea = () => {
-      const dis = ['editTitulo','editTipo','editLinea','editInicio','editFin','editObjetivo','editBenef'];
-      const locked = ['aprobado','desaprobado'].includes(editEstado.value);
-      document.getElementById('msgBloqueo').style.display = locked?'block':'none';
-      dis.forEach(id => document.getElementById(id).disabled = locked);
-    };
-    editEstado.addEventListener('change', bloquea);
+<!-- CONTENIDO -->
+<section class="content">
 
-    function filtrarTabla() {
-      const q = txtBuscar.value.toLowerCase();
-      const activo = document.querySelector('.btn-filter.active').dataset.filter;
-      [...tbody.rows].forEach(r=>{
-        const coincideTexto = r.innerText.toLowerCase().includes(q);
-        const est = r.getAttribute('data-estado');
-        const coincideEstado = activo==='todos' ? true : (est===activo);
-        r.style.display = (coincideTexto && coincideEstado) ? '' : 'none';
-      });
-      contarKPIs();
-    }
-    function contarKPIs(){
-      const visibles = [...tbody.rows].filter(r=>r.style.display!=='none');
-      const getc = st => visibles.filter(r=>r.getAttribute('data-estado')===st).length;
-      document.getElementById('kpiActivos').textContent = getc('registrado');
-      document.getElementById('kpiEvaluacion').textContent = getc('en_evaluacion');
-      document.getElementById('kpiAprobados').textContent = getc('aprobado');
-    }
-    txtBuscar.addEventListener('input', filtrarTabla);
-    btnClear.addEventListener('click', ()=>{txtBuscar.value=''; filtrarTabla();});
-    filtroBtns.forEach(b=>b.addEventListener('click', ()=>{
-      filtroBtns.forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      filtrarTabla();
-    }));
-    btnImprimir.addEventListener('click', ()=>window.print());
-    document.addEventListener('click', (e)=>{
-      const editBtn = e.target.closest('[data-edit]');
-      const upBtn = e.target.closest('[data-upload]');
-      if(editBtn){
-        const row = editBtn.closest('tr');
-        document.getElementById('editId').value = editBtn.dataset.id || '';
-        document.getElementById('editTitulo').value = row.cells[0].innerText.trim();
-        document.getElementById('editTipo').value = row.cells[1].innerText.trim();
-        document.getElementById('editLinea').value = row.cells[2].innerText.trim();
-        document.getElementById('editInicio').value = '';
-        document.getElementById('editFin').value = '';
-        document.getElementById('editObjetivo').value = '';
-        document.getElementById('editBenef').value = '';
-        const estTxt = row.querySelector('.badge').innerText.trim();
-        document.getElementById('editEstado').value =
-          estTxt.includes('en_evaluación') ? 'en_evaluacion' : estTxt;
-        bloquea();
-        modal.show();
-      }
-      if(upBtn){
-        const id = upBtn.dataset.id;
-        document.getElementById('selProyecto').value = id;
-        const estado = upBtn.closest('tr').getAttribute('data-estado');
-        document.getElementById('estadoProyecto').value =
-          estado==='en_evaluacion' ? 'en_evaluación' : estado;
-        document.getElementById('tabsEntregas').querySelector('.nav-link').click();
-        window.scrollTo({top: document.querySelector('.uploader').offsetTop - 80, behavior:'smooth'});
-      }
-    });
-    document.getElementById('btnGuardarEdit').addEventListener('click', ()=>{
-      const id = document.getElementById('editId').value;
-      const rows = [...tbody.rows];
-      const row = rows.find(r=> r.querySelector(`[data-id="${id}"]`));
-      if(row){
-        row.cells[0].innerText = document.getElementById('editTitulo').value;
-        row.cells[1].innerText = document.getElementById('editTipo').value;
-        row.cells[2].innerText = document.getElementById('editLinea').value;
-        const est = document.getElementById('editEstado').value;
-        row.setAttribute('data-estado', est);
-        const b = row.querySelector('.badge');
-        b.className = 'badge badge-pill ' + (est==='aprobado'?'text-bg-success':est==='en_evaluacion'?'text-bg-warning text-dark':'text-bg-primary');
-        b.textContent = est==='en_evaluacion' ? 'en_evaluación' : est;
-      }
-      modal.hide();
-      filtrarTabla();
-    });
-    document.getElementById('tabsEntregas').addEventListener('click',(e)=>{
-      const btn = e.target.closest('.nav-link'); if(!btn) return;
-      document.querySelectorAll('#tabsEntregas .nav-link').forEach(x=>x.classList.remove('active'));
-      btn.classList.add('active');
-      const map = {1:'1er avance',2:'2do avance',3:'3er avance',4:'4to avance',5:'5to avance',6:'6to avance',informe:'Informe final',articulo:'Artículo científico'};
-      document.getElementById('etiquetaEtapa').textContent = 'Subir archivo a: ' + map[btn.dataset.stage];
-    });
-    document.getElementById('btnSubirEntrega').addEventListener('click', ()=>{
-      const p = document.getElementById('selProyecto').value;
-      if(!p) { alert('Selecciona un proyecto.'); return; }
-      if(!document.getElementById('fileEntrega').files.length){ alert('Elige un archivo.'); return; }
-      alert('Archivo enviado.');
-      document.getElementById('fileEntrega').value='';
-    });
-    filtrarTabla();
-  </script>
+    <!-- BIENVENIDA -->
+    <section class="seccion tarjeta">
+        <h1 id="bienvenidaTexto">Bienvenido, Docente</h1>
+    </section>
+
+    <!-- MÉTRICAS -->
+    <section class="seccion">
+        <div class="cards-grid">
+            <div class="card-metric">
+                <div class="icono-card azul"><i class="fa fa-folder-open"></i></div>
+                <div><p>Proyectos Activos</p><h2 id="countActivos">0</h2></div>
+            </div>
+            <div class="card-metric">
+                <div class="icono-card naranja"><i class="fa fa-spinner"></i></div>
+                <div><p>En Revisión</p><h2 id="countEvaluacion">0</h2></div>
+            </div>
+            <div class="card-metric">
+                <div class="icono-card verde"><i class="fa fa-check-circle"></i></div>
+                <div><p>Aprobados</p><h2 id="countAprobados">0</h2></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FECHAS DE ENTREGA -->
+    <section class="seccion tarjeta">
+        <h2 class="titulo-seccion">Cronograma de Entregas</h2>
+
+        <div class="tabla-responsive">
+            <table class="tabla" id="tablaFechas">
+                <thead>
+                    <tr>
+                        <th>Tipo de Avance</th>
+                        <th>Fecha Límite</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyFechasEntrega"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TABLA DE PROYECTOS -->
+    <section class="seccion tarjeta">
+        <h2 class="titulo-seccion">Mis Proyectos</h2>
+
+        <div class="tabla-responsive">
+            <table class="tabla" id="tablaProyectos">
+                <thead>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Tipo</th>
+                        <th>Línea</th>
+                        <th>Estado</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyProyectos"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TABLA DE AVANCES -->
+    <section class="seccion tarjeta">
+        <h2 class="titulo-seccion">Mis Avances</h2>
+
+        <div class="tabla-responsive">
+            <table class="tabla" id="tablaAvances">
+                <thead>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Fecha Envío</th>
+                        <th>Nota</th>
+                        <th>Observaciones</th>
+                        <th>Archivo</th>
+                        <th>Informe Evaluador</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyAvances"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SUBIR AVANCE -->
+    <section class="seccion tarjeta">
+        <h2 class="titulo-seccion">Enviar Avance</h2>
+
+        <label>Seleccionar Proyecto:</label>
+        <select id="selectProyectoAvance"></select>
+
+        <label>Seleccionar Tipo de Avance:</label>
+        <select id="selectTipoAvance"></select>
+
+        <label>Archivo (.pdf / .docx):</label>
+        <input type="file" id="archivoAvance" accept=".pdf,.doc,.docx">
+
+        <button id="btnEnviarAvance" class="btn-primary">Enviar Avance</button>
+    </section>
+
+    <!-- GRAFICOS -->
+    <section class="seccion">
+        <div class="graficos-container">
+
+            <div class="grafico-item tarjeta">
+                <h2 class="titulo-seccion">Estado de Proyectos</h2>
+                <canvas id="graficoEstados"></canvas>
+            </div>
+
+            <div class="grafico-item tarjeta">
+                <h2 class="titulo-seccion">Avances por Tipo</h2>
+                <canvas id="graficoAvancesTipo"></canvas>
+            </div>
+
+        </div>
+    </section>
+
+</section>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables + Buttons -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+<!-- Toastify -->
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JavaScript principal -->
+<script type="module" src="../JavaScript/dashboard_docente.js"></script>
+
 </body>
 </html>

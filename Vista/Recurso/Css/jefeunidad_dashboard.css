@@ -1,0 +1,276 @@
+/* ======================================================
+   ESTILOS GENERALES
+====================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    color: #333;
+}
+
+/* ======================================================
+   NAVBAR
+====================================================== */
+
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-left .logo {
+    height: 45px;
+}
+
+.navbar-left h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.menu a {
+    margin-left: 15px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #444;
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+.menu a.active {
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    height: 42px;
+    border-radius: 50%;
+}
+
+.btn-cerrar {
+    padding: 7px 15px;
+    background: #ff4d4d;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ======================================================
+   CONTENIDO GENERAL
+====================================================== */
+
+.content {
+    padding: 25px;
+}
+
+.seccion {
+    margin-bottom: 30px;
+}
+
+.tarjeta {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.08);
+}
+
+.titulo-seccion {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* ======================================================
+   TABLAS
+====================================================== */
+
+.tabla-responsive {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla thead {
+    background: #007bff;
+    color: white;
+}
+
+.tabla thead th {
+    padding: 12px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.tabla tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.tabla tbody tr:hover {
+    background: #f0f7ff;
+}
+
+/* ======================================================
+   BOTONES
+====================================================== */
+
+.btn-accion {
+    padding: 7px 12px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-ver {
+    background: #007bff;
+}
+
+.btn-evaluar {
+    background: #8e44ad;
+}
+
+.btn-informe {
+    background: #00a86b;
+}
+
+.btn-print {
+    background: #28a745;
+}
+
+.btn-archivo {
+    background: #1e90ff;
+}
+
+.btn-accion:hover {
+    opacity: 0.85;
+}
+
+/* ======================================================
+   BADGES / ESTADOS
+====================================================== */
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-enviado {
+    background: #d0e7ff;
+    color: #0357a8;
+}
+
+.badge-evaluado {
+    background: #d4ffdc;
+    color: #0f7a2d;
+}
+
+.badge-observado {
+    background: #ffe4d4;
+    color: #a84300;
+}
+
+/* ======================================================
+   MODAL VISOR PDF / WORD
+====================================================== */
+
+.modal-visor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.visor-box {
+    width: 80%;
+    height: 85%;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.visor-box iframe {
+    flex-grow: 1;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-cerrar-modal {
+    margin-top: 15px;
+    padding: 10px;
+    background: #ff3b3b;
+    border: none;
+    color: white;
+    border-radius: 7px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 860px) {
+    .navbar-left h2 {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .btn-accion {
+        padding: 6px 9px;
+        font-size: 12px;
+    }
+
+    .visor-box {
+        width: 95%;
+        height: 90%;
+    }
+}

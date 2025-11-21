@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Proyecto</title>
+    <link rel="stylesheet" href="../Recurso/Css/NuevoProyecto.css">
+</head>
+
+<body>
+    <script type="module" src="../JavaScript/sessionCheck.js"></script>
+    <script type="module" src="../JavaScript/NuevoProyecto.js"></script>
+
+    <div class="container">
+        <h1>Registrar Nuevo Proyecto</h1>
+
+        <form id="formProyecto">
+
+            <label>Título del Proyecto *</label>
+            <input type="text" id="titulo" placeholder="Ej: Sistema para monitoreo de cultivos" required>
+
+            <label>Tipo de Proyecto *</label>
+            <select id="tipoProyecto" required>
+                <option value="">Cargando tipos...</option>
+            </select>
+
+            <label>Línea de Investigación *</label>
+            <select id="lineaInvestigacion" required>
+                <option value="">Cargando líneas...</option>
+            </select>
+
+            <label>Objetivo General</label>
+            <textarea id="objetivo_general" placeholder="Describe el objetivo general"></textarea>
+
+            <label>Beneficiarios</label>
+            <textarea id="beneficiarios" placeholder="Quiénes se beneficiarán"></textarea>
+
+            <div class="fechas">
+                <div>
+                    <label>Fecha Inicio *</label>
+                    <input type="date" id="fecha_inicio" required>
+                </div>
+
+                <div>
+                    <label>Fecha Fin *</label>
+                    <input type="date" id="fecha_fin" required>
+                </div>
+            </div>
+
+            <button type="submit" id="btnRegistrar">Registrar Proyecto</button>
+            <button type="button" id="btnLimpiar">Limpiar</button>
+
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+/* ==========================
+   FONDO GENERAL
+   ========================== */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0d2c3f, #2d6d80, #8fbcc9);
+    background-size: cover;
+}
+
+/* ==========================
+   TARJETA PRINCIPAL
+   ========================== */
+.login-card {
+    width: 380px;
+    padding: 45px 40px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(20px);
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    animation: fadeIn 0.8s ease;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   AVATAR
+   ========================== */
+.avatar {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: #ffffff;
+}
+
+/* ==========================
+   TÍTULO
+   ========================== */
+.titulo-login {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* ==========================
+   LABELS
+   ========================== */
+label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: #e1e7ec;
+    margin-bottom: 8px;
+}
+
+/* ==========================
+   INPUT GROUP
+   ========================== */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 18px;
+    border: 1px solid #d2d7db;
+}
+
+.input-group .icon {
+    color: #6a7a89;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: #2d3a46;
+}
+
+.domain {
+    background: #e5ecf0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #3c4f5e;
+}
+
+/* ==========================
+   BOTONES
+   ========================== */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-login {
+    flex: 1;
+    padding: 12px 0;
+    background-color: #052b47;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #064066;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 12px 0;
+    background-color: #b9c4cc;
+    color: #253039;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #d5dde3;
+}
+
+/* ==========================
+   RESPONSIVE - CELULARES
+   ========================== */
+@media (max-width: 480px) {
+    .login-card {
+        width: 90%;
+        padding: 35px 25px;
+    }
+
+    .avatar {
+        width: 90px;
+        height: 90px;
+        font-size: 42px;
+    }
+
+    .titulo-login {
+        font-size: 24px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+}

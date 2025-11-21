@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Subir Archivos a Supabase</title>
+</head>
+<body>
+  <h2>Subir PDF o DOCX</h2>
+
+  <!-- Input para seleccionar archivo -->
+  <input type="file" id="fileInput" accept=".pdf,.doc,.docx">
+  <br><br>
+
+  <!-- Botón para subir -->
+  <button onclick="uploadFile()">Subir Archivo</button>
+
+  <!-- Resultado -->
+  <p id="result" style="font-weight: bold;"></p>
+
+  <!-- Zona de vista previa -->
+  <div id="preview" style="margin-top:20px;"></div>
+
+  <!-- Archivo JS -->
+  <script type="module" src="../JavaScript/upload.js"></script>
+</body>
+</html>

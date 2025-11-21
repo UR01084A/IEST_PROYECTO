@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+
+    <link rel="stylesheet" href="../Recurso/Css/perfil.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">Investigación</div>
+
+    <nav class="menu">
+        <a href="docente_dashboard.html">Inicio</a>
+        <a href="NuevoProyecto.html">Nuevo Proyecto</a>
+        <a href="Perfil.html" class="active">Perfil</a>
+    </nav>
+
+    <div class="usuario">
+        <span class="icon">👤</span>
+        <span id="userNameHeader">Usuario</span>
+        <button id="btnLogout" class="logout">Cerrar sesión</button>
+    </div>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="perfil-container">
+
+    <h2 class="titulo">Mi Perfil</h2>
+
+    <div class="perfil-card">
+
+        <!-- FOTO -->
+        <div class="foto-section">
+            <img id="fotoPerfil" src="../Recurso/Img/default_user.png" alt="Foto de perfil">
+
+            <label class="btnFoto">
+                Cambiar foto
+                <input type="file" id="inputFoto" accept="image/png, image/jpeg, image/jpg">
+            </label>
+
+            <p class="nota-formato">Formatos permitidos: JPG – JPEG – PNG</p>
+        </div>
+
+        <!-- DATOS -->
+        <div class="data-section">
+
+            <label>Nombre completo</label>
+            <input type="text" id="inputUsername" disabled>
+
+            <label>Email</label>
+            <input type="email" id="inputEmail" disabled>
+
+            <label>Rol</label>
+            <input type="text" id="inputRol" disabled>
+
+            <label>Estado de cuenta</label>
+            <input type="text" id="inputEstado" disabled>
+
+            <label>Fecha de creación</label>
+            <input type="text" id="inputFecha" disabled>
+
+            <label>Contraseña encriptada</label>
+            <input type="text" id="inputPasswordHash" disabled>
+
+            <label>Nueva contraseña (opcional)</label>
+            <input type="password" id="inputNuevaPassword" placeholder="Dejar vacío para no cambiar">
+
+            <button id="btnGuardar" class="btnGuardar">Guardar cambios</button>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script type="module" src="../JavaScript/perfil.js"></script>
+
+</body>
+</html>

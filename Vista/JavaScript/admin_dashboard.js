@@ -1,119 +1,220 @@
 import { supabase } from "../../Modelo/supabase.js";
-import bcrypt from "https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.js";
 
-/* ===== Validación de sesión y rol (ADMIN = 1) ===== */
-const SESSION = JSON.parse(localStorage.getItem("user") || "null");
-if (!SESSION || Number(SESSION.rol) !== 1) {
-  window.location.href = "./login.html";
-}
-document.getElementById("userName").textContent = SESSION.email || "Administrador";
-
-/* ===== LOGOUT ===== */
-document.getElementById("btnLogout").addEventListener("click",()=>{
-  localStorage.removeItem("user");
-  window.location.href = "./login.html";
+/* ============================================================
+   INICIO
+============================================================ */
+document.addEventListener("DOMContentLoaded", async () => {
+  cargarUsuarioActual();
+  await cargarUsuarios();
 });
 
-/* ===== Utilidades ===== */
-const ROLES = { 1:"Administrador",2:"Jefe de Unidad",3:"Docente" };
-function badgeEstado(ok){return ok?`<span class="badge text-bg-success">Activo</span>`:`<span class="badge text-bg-secondary">Inactivo</span>`}
-function fmtDate(iso){try{return new Date(iso).toLocaleDateString();}catch{return"";}}
+/* ============================================================
+   CARGAR USUARIO LOGEADO
+============================================================ */
+async function cargarUsuarioActual() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
 
-/* ===== KPIs ===== */
-async function cargarKPIs(){
-  const total=await supabase.from("usuarios").select("*",{count:"exact",head:true});
-  const activos=await supabase.from("usuarios").select("*",{count:"exact",head:true}).eq("estado",true);
-  const inactivos=await supabase.from("usuarios").select("*",{count:"exact",head:true}).eq("estado",false);
-  const docentes=await supabase.from("usuarios").select("*",{count:"exact",head:true}).eq("rol_id",3);
-  const evaluadores=await supabase.from("usuarios").select("*",{count:"exact",head:true}).eq("rol_id",2);
+  const { data: perfil } = await supabase
+    .from("usuarios")
+    .select("username, rol_id")
+    .eq("id", user.id)
+    .single();
 
-  document.getElementById("kpiTotal").textContent=total.count??0;
-  document.getElementById("kpiActivos").textContent=activos.count??0;
-  document.getElementById("kpiInactivos").textContent=inactivos.count??0;
-  document.getElementById("kpiDocentes").textContent=docentes.count??0;
-  document.getElementById("kpiEvaluadores").textContent=evaluadores.count??0;
+  document.getElementById("userName").textContent = perfil?.username ?? "Administrador";
 }
 
-/* ===== Tabla usuarios ===== */
-async function cargarTabla(){
-  const tb=document.getElementById("tablaUsuariosBody");
-  tb.innerHTML=`<tr><td colspan="6" class="text-secondary py-3 ps-3">Cargando…</td></tr>`;
+/* ============================================================
+   CARGAR LISTA DE USUARIOS
+============================================================ */
+let usuariosGlobal = [];
 
-  const {data,error}=await supabase.from("usuarios").select("id, username, email, rol_id, estado, fecha_creacion").order("fecha_creacion",{ascending:false});
+async function cargarUsuarios() {
+  const tbody = document.getElementById("tablaUsuariosBody");
+  tbody.innerHTML = `<tr><td colspan="6" class="py-3 ps-3 text-secondary">Cargando usuarios…</td></tr>`;
 
-  if(error){tb.innerHTML=`<tr><td colspan="6" class="text-danger">Error al cargar.</td></tr>`;return;}
-  if(!data||data.length===0){tb.innerHTML=`<tr><td colspan="6" class="text-secondary">Sin usuarios registrados.</td></tr>`;return;}
+  const { data: usuarios, error } = await supabase
+    .from("usuarios")
+    .select(`
+      id,
+      username,
+      email,
+      rol_id,
+      estado,
+      fecha_creacion,
+      roles (nombre)
+    `)
+    .order("fecha_creacion", { ascending: false });
 
-  tb.innerHTML=data.map(u=>`
-    <tr>
-      <td>${u.username}</td>
-      <td>${u.email}</td>
-      <td>${ROLES[u.rol_id]??u.rol_id}</td>
-      <td>${badgeEstado(u.estado)}</td>
-      <td>${fmtDate(u.fecha_creacion)}</td>
-      <td class="d-flex gap-1">
-        <button class="btn btn-sm btn-outline-primary" data-action="edit" data-id="${u.id}"><i class="bi bi-pencil-square"></i></button>
-        ${u.estado?`<button class="btn btn-sm btn-outline-warning" data-action="toggle" data-id="${u.id}" data-next="false"><i class="bi bi-slash-circle"></i></button>`:`<button class="btn btn-sm btn-outline-success" data-action="toggle" data-id="${u.id}" data-next="true"><i class="bi bi-check2-circle"></i></button>`}
-      </td>
-    </tr>
-  `).join("");
-}
-
-/* Delegación acciones */
-document.getElementById("tablaUsuariosBody").addEventListener("click",async(e)=>{
-  const btn=e.target.closest("button");if(!btn)return;
-  const id=btn.dataset.id;const act=btn.dataset.action;
-
-  if(act==="edit"){
-    const{data}=await supabase.from("usuarios").select("id, username, email, rol_id").eq("id",id).maybeSingle();
-    if(!data)return;
-    document.getElementById("ed_id").value=data.id;
-    document.getElementById("ed_nombre").value=data.username;
-    document.getElementById("ed_correo").value=data.email;
-    document.getElementById("ed_rol").value=data.rol_id;
-    new bootstrap.Modal(document.getElementById("modalEditar")).show();
+  if (error) {
+    console.error(error);
+    tbody.innerHTML = `<tr><td colspan="6" class="text-danger">Error cargando usuarios.</td></tr>`;
+    return;
   }
 
-  if(act==="toggle"){
-    const next=btn.dataset.next==="true";
-    await supabase.from("usuarios").update({estado:next}).eq("id",id);
-    await cargarKPIs();await cargarTabla();
+  usuariosGlobal = usuarios;
+  renderizarTabla(usuariosGlobal);
+  actualizarKPIs(usuariosGlobal);
+}
+
+/* ============================================================
+   RENDERIZAR TABLA DE USUARIOS
+============================================================ */
+function renderizarTabla(lista) {
+  const tbody = document.getElementById("tablaUsuariosBody");
+  tbody.innerHTML = "";
+
+  lista.forEach(u => {
+    const badge =
+      u.estado === true
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-secondary">Inactivo</span>`;
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${u.username}</td>
+        <td>${u.email}</td>
+        <td>${u.roles?.nombre}</td>
+        <td>${badge}</td>
+        <td>${u.fecha_creacion?.split("T")[0]}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" onclick="abrirEditar('${u.id}')">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger" onclick="cambiarEstado('${u.id}', ${u.estado})">
+            <i class="bi bi-power"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+/* ============================================================
+   KPIs DEL DASHBOARD
+============================================================ */
+function actualizarKPIs(lista) {
+  document.getElementById("kpiTotal").textContent = lista.length;
+  document.getElementById("kpiActivos").textContent = lista.filter(u => u.estado === true).length;
+  document.getElementById("kpiInactivos").textContent = lista.filter(u => u.estado === false).length;
+
+  document.getElementById("kpiDocentes").textContent = lista.filter(u => u.rol_id === 3).length;
+  document.getElementById("kpiEvaluadores").textContent = lista.filter(u => u.rol_id === 2).length;
+}
+
+/* ============================================================
+   CREAR NUEVO USUARIO
+============================================================ */
+document.getElementById("formNuevo").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const username = document.getElementById("nu_nombre").value.trim();
+  const email = document.getElementById("nu_correo").value.trim();
+  const rol_id = parseInt(document.getElementById("nu_rol").value);
+  const password_hash = document.getElementById("nu_pass").value.trim();
+
+  if (!username || !email || !password_hash) {
+    alert("Todos los campos son obligatorios.");
+    return;
   }
+
+  const { error } = await supabase.from("usuarios").insert({
+    username,
+    email,
+    rol_id,
+    password_hash,
+    estado: true
+  });
+
+  if (error) {
+    console.error(error);
+    alert("❌ Error al registrar usuario.");
+    return;
+  }
+
+  alert("✅ Usuario registrado correctamente.");
+
+  document.getElementById("formNuevo").reset();
+  bootstrap.Modal.getInstance(document.getElementById("modalNuevo")).hide();
+
+  cargarUsuarios();
 });
 
-/* Crear usuario */
-document.getElementById("formNuevo").addEventListener("submit",async(e)=>{
+/* ============================================================
+   ABRIR MODAL EDITAR USUARIO
+============================================================ */
+window.abrirEditar = function (id) {
+  const user = usuariosGlobal.find(u => u.id === id);
+  if (!user) return;
+
+  document.getElementById("ed_id").value = id;
+  document.getElementById("ed_nombre").value = user.username;
+  document.getElementById("ed_correo").value = user.email;
+  document.getElementById("ed_rol").value = user.rol_id;
+
+  new bootstrap.Modal(document.getElementById("modalEditar")).show();
+};
+
+/* ============================================================
+   EDITAR USUARIO
+============================================================ */
+document.getElementById("formEditar").addEventListener("submit", async e => {
   e.preventDefault();
-  const username=document.getElementById("nu_nombre").value.trim();
-  const email=document.getElementById("nu_correo").value.trim();
-  const rol_id=Number(document.getElementById("nu_rol").value);
-  const pass=document.getElementById("nu_pass").value.trim();
 
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(pass, salt);
+  const id = document.getElementById("ed_id").value;
+  const username = document.getElementById("ed_nombre").value;
+  const email = document.getElementById("ed_correo").value;
+  const rol_id = parseInt(document.getElementById("ed_rol").value);
 
-  const{error}=await supabase.from("usuarios").insert({id:crypto.randomUUID(),username,email,rol_id,password_hash:hash,estado:true});
-  if(!error){
-    document.getElementById("formNuevo").reset();
-    bootstrap.Modal.getInstance(document.getElementById("modalNuevo"))?.hide();
-    await cargarKPIs();await cargarTabla();
-  }else alert("Error al registrar.");
+  const { error } = await supabase.from("usuarios")
+    .update({ username, email, rol_id })
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    alert("❌ Error al actualizar usuario.");
+    return;
+  }
+
+  alert("✅ Cambios guardados correctamente.");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditar")).hide();
+  cargarUsuarios();
 });
 
-/* Editar usuario */
-document.getElementById("formEditar").addEventListener("submit",async(e)=>{
-  e.preventDefault();
-  const id=document.getElementById("ed_id").value;
-  const nombre=document.getElementById("ed_nombre").value.trim();
-  const correo=document.getElementById("ed_correo").value.trim();
-  const rol_id=Number(document.getElementById("ed_rol").value);
+/* ============================================================
+   ACTIVAR / DESACTIVAR USUARIO
+============================================================ */
+window.cambiarEstado = async function (id, estadoActual) {
+  const confirmacion = confirm(
+    `¿Deseas ${estadoActual ? "desactivar" : "activar"} este usuario?`
+  );
+  if (!confirmacion) return;
 
-  const{error}=await supabase.from("usuarios").update({username:nombre,email:correo,rol_id}).eq("id",id);
-  if(!error){
-    bootstrap.Modal.getInstance(document.getElementById("modalEditar"))?.hide();
-    await cargarKPIs();await cargarTabla();
-  }else alert("Error al actualizar.");
+  const { error } = await supabase
+    .from("usuarios")
+    .update({ estado: !estadoActual })
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    alert("❌ No se pudo actualizar el estado.");
+    return;
+  }
+
+  cargarUsuarios();
+};
+
+/* ============================================================
+   CERRAR SESIÓN
+============================================================ */
+document.getElementById("btnLogout").addEventListener("click", async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    alert("❌ No se pudo cerrar sesión.");
+    return;
+  }
+
+  window.location.href = "../Vistas/login.html";
 });
-
-/* Inicializar */
-(async function init(){await cargarKPIs();await cargarTabla();})();

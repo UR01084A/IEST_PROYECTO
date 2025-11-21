@@ -1,0 +1,114 @@
+/* ============================================================
+   ESTILO GENERAL PARA FORMULARIOS DE EVALUACIÓN (ANEXOS)
+   Compatible con todos los anexos y formularios creados
+   ============================================================ */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Título general */
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* Subtítulos */
+h3 {
+    margin-top: 30px;
+    color: #34495e;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+    font-weight: 600;
+}
+
+/* FORMULARIO */
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 850px;
+    margin: 0 auto;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* CONTENEDOR DE PREGUNTAS */
+.preguntas {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 10px 20px;
+    margin-bottom: 15px;
+}
+
+.preguntas label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
+}
+
+.preguntas select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background: #fff;
+    transition: border 0.2s ease;
+}
+
+.preguntas select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    border-radius: 6px;
+    padding: 10px;
+    border: 1px solid #bbb;
+    resize: vertical;
+    font-size: 14px;
+}
+
+/* BOTÓN GUARDAR */
+button[type="submit"] {
+    width: 100%;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: background 0.25s;
+}
+
+button[type="submit"]:hover {
+    background: #217dbb;
+}
+
+/* HR */
+hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 2px solid #eee;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .preguntas {
+        grid-template-columns: 1fr;
+    }
+
+    .preguntas select {
+        width: 100%;
+    }
+}
