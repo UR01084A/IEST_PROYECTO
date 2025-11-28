@@ -1,77 +1,227 @@
+/* =========================================================
+   NUEVO PROYECTO – ESTILOS ESPECÍFICOS DEL FORMULARIO
+   (Compatibles con el dashboard_docente.css)
+   ========================================================= */
+
+/* Fuente y fondo (suave, sin pelearse con el dashboard) */
 body {
-    background-color: #eef6fa;
+    background-color: #f4f6fa;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
-    font-family: Arial, sans-serif;
+    color: #1f2933;
 }
 
-.container {
-    max-width: 850px;
+/* Contenedor principal del formulario
+   (si usas .seccion.tarjeta del dashboard, igual se ve bien) */
+.container,
+.seccion.tarjeta {
+    max-width: 900px;
     margin: 40px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    background: #ffffff;
+    padding: 28px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.10);
 }
 
-h1 {
+/* Título principal */
+.container h1,
+.seccion.tarjeta h1 {
     text-align: center;
     color: #0077b6;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    font-size: 26px;
+    font-weight: 700;
 }
 
+/* Subtítulo opcional (si lo usas) */
+.form-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* FORMULARIO GENERAL */
+#formProyecto {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Grupo de campos */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Etiquetas */
 label {
-    font-weight: bold;
-    margin-top: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
     display: block;
     color: #003049;
+    font-size: 14px;
 }
 
-input, textarea, select {
+/* Asterisco para campos obligatorios */
+.required {
+    color: #e11d48;
+    font-weight: 700;
+}
+
+/* Inputs generales */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
     width: 100%;
-    padding: 12px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid #d0d7e2;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #f9fbff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
+/* Placeholder más suave */
+input::placeholder,
+textarea::placeholder {
+    color: #9aa5b1;
+    font-size: 13px;
+}
+
+/* Estado focus */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #0077b6;
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.12);
+    background-color: #ffffff;
+}
+
+/* Textarea */
 textarea {
     resize: vertical;
-    height: 90px;
+    min-height: 90px;
 }
 
-.fechas {
+/* Texto de ayuda debajo de los campos (si lo usas) */
+.help-text {
+    font-size: 12px;
+    color: #7b8794;
+    margin-top: 4px;
+}
+
+/* ==========================
+   FECHAS (grid de 2 columnas)
+   ========================== */
+.fechas,
+.fechas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* Para que cada input de fecha sea un form-group */
+.fechas .form-group,
+.fechas-grid .form-group {
+    margin: 0;
+}
+
+/* ==========================
+   BOTONES
+   ========================== */
+
+/* Contenedor de botones: lado a lado en escritorio */
+.form-actions {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 14px;
+    margin-top: 8px;
 }
 
-button {
-    padding: 12px 20px;
+/* Botón base (solo dentro del formulario para no afectar navbar) */
+#formProyecto button {
+    padding: 11px 18px;
+    border-radius: 10px;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.2s ease;
 }
 
+/* Botón principal: Registrar */
+.btn-primary,
 #btnRegistrar {
+    flex: 1;
     background-color: #0077b6;
-    color: white;
-    width: 48%;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(0, 119, 182, 0.35);
 }
 
+.btn-primary:hover,
 #btnRegistrar:hover {
     background-color: #005f87;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(0, 95, 135, 0.40);
 }
 
+/* Botón secundario: Limpiar */
+.btn-secondary,
 #btnLimpiar {
-    background-color: #adb5bd;
-    color: black;
-    width: 48%;
+    flex: 1;
+    background-color: #e5e7eb;
+    color: #374151;
+    box-shadow: 0 2px 6px rgba(148, 163, 184, 0.35);
 }
 
+.btn-secondary:hover,
 #btnLimpiar:hover {
-    background-color: #6c757d;
+    background-color: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(148, 163, 184, 0.45);
 }
 
+/* Estado disabled (por si lo usas desde JS) */
+#formProyecto button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+
+@media (max-width: 768px) {
+    .container,
+    .seccion.tarjeta {
+        margin: 20px 12px;
+        padding: 20px 18px;
+    }
+
+    .fechas,
+    .fechas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    #btnRegistrar,
+    .btn-secondary,
+    #btnLimpiar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container h1,
+    .seccion.tarjeta h1 {
+        font-size: 22px;
+    }
+}

@@ -1,86 +1,196 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil | Investigación</title>
 
-    <link rel="stylesheet" href="../Recurso/Css/perfil.css">
+    <!-- Fuente base -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
+    <!-- Iconos (para el botón cerrar sesión, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Estilos del dashboard (navbar, layout general) -->
+    <link rel="stylesheet" href="../Recurso/Css/dashboard_docente.css">
+
+    <!-- Estilos propios del perfil -->
+    <link rel="stylesheet" href="../Recurso/Css/perfil.css" />
+
+    <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">Investigación</div>
+    <!-- ============================================================
+         BARRA DE NAVEGACIÓN
+    ============================================================ -->
+    <header class="navbar topbar-docente">
+        <div class="navbar-left">
+            <img src="../Recurso/img/logo.png" class="logo" alt="Logo institucional">
 
-    <nav class="menu">
-        <a href="docente_dashboard.html">Inicio</a>
-        <a href="NuevoProyecto.html">Nuevo Proyecto</a>
-        <a href="Perfil.html" class="active">Perfil</a>
-    </nav>
+            <div class="navbar-titles">
+                <h2>Investigación Docente</h2>
+                <span class="navbar-subtitle">Gestión de proyectos y avances</span>
+            </div>
 
-    <div class="usuario">
-        <span class="icon">👤</span>
-        <span id="userNameHeader">Usuario</span>
-        <button id="btnLogout" class="logout">Cerrar sesión</button>
-    </div>
-</header>
-
-<!-- CONTENIDO PRINCIPAL -->
-<main class="perfil-container">
-
-    <h2 class="titulo">Mi Perfil</h2>
-
-    <div class="perfil-card">
-
-        <!-- FOTO -->
-        <div class="foto-section">
-            <img id="fotoPerfil" src="../Recurso/Img/default_user.png" alt="Foto de perfil">
-
-            <label class="btnFoto">
-                Cambiar foto
-                <input type="file" id="inputFoto" accept="image/png, image/jpeg, image/jpg">
-            </label>
-
-            <p class="nota-formato">Formatos permitidos: JPG – JPEG – PNG</p>
+            <nav class="menu" aria-label="Navegación principal">
+                <a href="../Vistas/docente_dashboard.html" class="active">Inicio</a>
+                <a href="../Vistas/NuevoProyecto.html">Nuevo Proyecto</a>
+                <a href="perfil.html">Mi Perfil</a>
+            </nav>
         </div>
 
-        <!-- DATOS -->
-        <div class="data-section">
-
-            <label>Nombre completo</label>
-            <input type="text" id="inputUsername" disabled>
-
-            <label>Email</label>
-            <input type="email" id="inputEmail" disabled>
-
-            <label>Rol</label>
-            <input type="text" id="inputRol" disabled>
-
-            <label>Estado de cuenta</label>
-            <input type="text" id="inputEstado" disabled>
-
-            <label>Fecha de creación</label>
-            <input type="text" id="inputFecha" disabled>
-
-            <label>Contraseña encriptada</label>
-            <input type="text" id="inputPasswordHash" disabled>
-
-            <label>Nueva contraseña (opcional)</label>
-            <input type="password" id="inputNuevaPassword" placeholder="Dejar vacío para no cambiar">
-
-            <button id="btnGuardar" class="btnGuardar">Guardar cambios</button>
-
+        <div class="navbar-right">
+            <!-- Este id se usa en perfil.js para mostrar el nombre -->
+            <span id="userNameHeader" class="navbar-user">Docente</span>
+            <img src="../Recurso/img/usuario.png" class="avatar" alt="Foto del usuario">
+            <!-- Este id se usa en perfil.js para el logout -->
+            <button id="btnLogout" class="btn-cerrar" type="button">
+                <i class="fa fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
         </div>
+    </header>
 
-    </div>
+    <!-- =========================================================
+         CONTENIDO PRINCIPAL
+    ========================================================== -->
+    <main class="perfil-container">
+        <h1 class="titulo">Mi Perfil</h1>
+        <p>
+            Revisa tu información personal, actualiza tu foto de perfil
+            y cambia tu contraseña cuando lo necesites.
+        </p>
 
-</main>
+        <section class="perfil-card" aria-label="Información del perfil">
 
-<script type="module" src="../JavaScript/perfil.js"></script>
+            <!-- FOTO DE PERFIL -->
+            <aside class="foto-section" aria-label="Foto de perfil">
+                <figure class="foto-wrapper">
+                    <img
+                        id="fotoPerfil"
+                        src="../Recurso/Img/default_user.png"
+                        alt="Foto de perfil del usuario"
+                    />
+                </figure>
+
+                <label class="btnFoto">
+                    Cambiar foto
+                    <input
+                        type="file"
+                        id="inputFoto"
+                        accept="image/png, image/jpeg, image/jpg"
+                        aria-label="Seleccionar nueva foto de perfil"
+                    />
+                </label>
+
+                <p class="nota-formato">
+                    Formatos permitidos: <strong>JPG, JPEG, PNG</strong>.
+                </p>
+            </aside>
+
+            <!-- DATOS DEL USUARIO -->
+            <section class="data-section" aria-label="Datos personales y de cuenta">
+
+                <div class="field-group">
+                    <label for="inputUsername">Nombre completo</label>
+                    <input
+                        type="text"
+                        id="inputUsername"
+                        autocomplete="name"
+                        disabled
+                    />
+                </div>
+
+                <div class="field-group">
+                    <label for="inputEmail">Email</label>
+                    <input
+                        type="email"
+                        id="inputEmail"
+                        autocomplete="email"
+                        disabled
+                    />
+                </div>
+
+                <div class="field-group">
+                    <label for="inputRol">Rol</label>
+                    <input
+                        type="text"
+                        id="inputRol"
+                        disabled
+                    />
+                </div>
+
+                <div class="field-group">
+                    <label for="inputEstado">Estado de cuenta</label>
+                    <input
+                        type="text"
+                        id="inputEstado"
+                        disabled
+                    />
+                </div>
+
+                <div class="field-group">
+                    <label for="inputFecha">Fecha de creación</label>
+                    <input
+                        type="text"
+                        id="inputFecha"
+                        disabled
+                    />
+                </div>
+
+                <div class="field-group">
+                    <label for="inputPasswordHash">Contraseña encriptada</label>
+                    <input
+                        type="text"
+                        id="inputPasswordHash"
+                        disabled
+                    />
+                </div>
+
+                <hr class="perfil-divider" />
+
+                <div class="field-group">
+                    <label for="inputNuevaPassword">Nueva contraseña (opcional)</label>
+                    <input
+                        type="password"
+                        id="inputNuevaPassword"
+                        placeholder="Dejar vacío para no cambiar"
+                        autocomplete="new-password"
+                    />
+                    <small class="help-text">
+                        La contraseña debe tener al menos 8 caracteres.
+                    </small>
+                </div>
+
+                <div class="acciones-perfil">
+                    <button id="btnGuardar" class="btnGuardar" type="button">
+                        Guardar cambios
+                    </button>
+                </div>
+
+            </section>
+
+        </section>
+    </main>
+
+        <!-- Tema global -->
+    <script type="module" src="../JavaScript/aplicar_tema_global.js"></script>
+
+    <!-- SweetAlert (ya lo tienes en el <head>, este podría omitirse si quieres) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+    <!-- ✅ BCRYPTJS: librería para encriptar contraseñas en el navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"
+            integrity="sha512-VP5XWQ2d6Jp7G0uCwSgUx2w9x9l6fLJtSy0N2iJyQyP9SxE1lI+7OcKC8L3fyceYFne5DE5pSxbF0cBLKXy1A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+
+    <!-- JS principal del perfil (usa bcryptjs) -->
+    <script type="module" src="../JavaScript/perfil.js"></script>
 
 </body>
 </html>

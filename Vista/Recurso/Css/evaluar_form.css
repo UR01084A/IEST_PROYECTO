@@ -1,114 +1,293 @@
 /* ============================================================
-   ESTILO GENERAL PARA FORMULARIOS DE EVALUACIÓN (ANEXOS)
-   Compatible con todos los anexos y formularios creados
+   ESTILO GENERAL – FORMULARIOS DE EVALUACIÓN (ANEXOS)
+   Se aplica a todos los ANEXOS (01, 02, 03, 04, 05, 06)
    ============================================================ */
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: #f4f6f9;
+/* Reset básico */
+* {
     margin: 0;
-    padding: 20px;
-    color: #333;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Título general */
+/* Fondo y tipografía */
+body {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: radial-gradient(circle at top, #e8f1ff 0, #f4f6f9 42%, #eef1f7 100%);
+    color: #2d3748;
+    padding: 20px;
+}
+
+/* Contenedor principal del anexo */
+.anexo-container {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   ENCABEZADO
+============================================================ */
+.anexo-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.anexo-header h1 {
+    font-size: 26px;
+    color: #1f3b76;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.anexo-header h2 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.anexo-descripcion {
+    font-size: 14px;
+    color: #4a5568;
+    max-width: 720px;
+    margin: 0 auto 10px;
+}
+
+/* Títulos fuera de .anexo-header (por compatibilidad con anexos antiguos) */
 h2 {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     font-weight: 700;
 }
 
-/* Subtítulos */
+/* Subtítulos de bloque */
 h3 {
-    margin-top: 30px;
+    margin-top: 26px;
+    margin-bottom: 10px;
     color: #34495e;
-    border-left: 5px solid #3498db;
-    padding-left: 10px;
     font-weight: 600;
+    font-size: 17px;
+    border-left: 5px solid #2563eb; /* azul */
+    padding-left: 10px;
 }
 
-/* FORMULARIO */
+/* ============================================================
+   FORMULARIO
+============================================================ */
+.anexo-form,
 form {
-    background: white;
-    padding: 25px;
+    background: #ffffff;
+    padding: 24px 26px 26px;
+    border-radius: 12px;
+    max-width: 980px;
+    margin: 0 auto 25px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+    border: 1px solid rgba(148, 163, 184, 0.55);
+}
+
+/* Bloque de sección (cada título con sus preguntas) */
+.anexo-bloque {
+    background: linear-gradient(135deg, #f9fbff, #f7fafc);
     border-radius: 10px;
-    max-width: 850px;
-    margin: 0 auto;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+    padding: 14px 14px 6px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 18px;
 }
 
-/* CONTENEDOR DE PREGUNTAS */
+/* ============================================================
+   PREGUNTAS Y CAMPOS
+============================================================ */
+
+/* Contenedor de filas de preguntas */
 .preguntas {
-    display: grid;
-    grid-template-columns: 1fr 150px;
-    gap: 10px 20px;
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
 }
 
-.preguntas label {
+/* Cada fila (label + select) */
+.campo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 160px;
+    align-items: center;
+    gap: 8px 16px;
+}
+
+/* Soporta también anexos antiguos sin .campo (label y select directos) */
+.preguntas > label {
     font-size: 15px;
     font-weight: 500;
-    color: #555;
+    color: #4a5568;
+    margin-top: 4px;
 }
 
-.preguntas select {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+/* Label dentro de .campo */
+.campo label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+/* Select base */
+.preguntas select,
+.campo select,
+select {
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
     font-size: 14px;
-    background: #fff;
-    transition: border 0.2s ease;
+    background: #ffffff;
+    color: #1f2933;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #64748b 50%),
+        linear-gradient(135deg, #64748b 50%, transparent 50%);
+    background-position:
+        calc(100% - 16px) calc(50% - 3px),
+        calc(100% - 11px) calc(50% - 3px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
 }
 
-.preguntas select:focus {
-    border-color: #3498db;
+/* Estado hover/focus */
+.preguntas select:hover,
+.campo select:hover,
+select:hover {
+    border-color: #2563eb;
+}
+
+.preguntas select:focus,
+.campo select:focus,
+select:focus {
     outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    transform: translateY(-0.5px);
 }
 
-/* Textarea */
+/* Opción "Seleccione" (se ve más tenue) */
+select option[value=""] {
+    color: #9ca3af;
+}
+
+/* Textarea (si en algún anexo lo usas) */
 textarea {
     width: 100%;
-    border-radius: 6px;
+    min-height: 80px;
+    border-radius: 8px;
     padding: 10px;
-    border: 1px solid #bbb;
+    border: 1px solid #cbd5e1;
     resize: vertical;
     font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* BOTÓN GUARDAR */
-button[type="submit"] {
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+/* ============================================================
+   BOTÓN GUARDAR / ENVIAR
+============================================================ */
+
+button[type="submit"],
+.btn-guardar {
     width: 100%;
-    background: #3498db;
-    color: white;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
     border: none;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 8px;
+    padding: 11px 16px;
+    font-size: 15px;
+    border-radius: 999px;
     cursor: pointer;
     font-weight: 600;
-    margin-top: 15px;
-    transition: background 0.25s;
+    margin-top: 18px;
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
 }
 
-button[type="submit"]:hover {
-    background: #217dbb;
+/* Efecto al pasar el mouse */
+button[type="submit"]:hover,
+.btn-guardar:hover {
+    filter: brightness(1.03);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(37, 99, 235, 0.45);
 }
 
-/* HR */
+/* Efecto al presionar */
+button[type="submit"]:active,
+.btn-guardar:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+/* Estado deshabilitado */
+button[type="submit"]:disabled,
+.btn-guardar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Contenedor de acciones, por si lo usas */
+.anexo-acciones {
+    margin-top: 16px;
+}
+
+/* ============================================================
+   LÍNEA SEPARADORA
+============================================================ */
 hr {
-    margin: 25px 0;
+    margin: 24px 0 18px;
     border: none;
-    border-top: 2px solid #eee;
+    border-top: 2px solid #e5e7eb;
 }
 
-/* RESPONSIVE */
-@media (max-width: 700px) {
-    .preguntas {
-        grid-template-columns: 1fr;
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 800px) {
+    body {
+        padding: 12px;
     }
 
-    .preguntas select {
-        width: 100%;
+    .anexo-form,
+    form {
+        padding: 18px 16px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.16);
+    }
+
+    .anexo-header h1 {
+        font-size: 22px;
+    }
+
+    .anexo-header h2 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .campo {
+        grid-template-columns: 1fr; /* label arriba, select abajo en pantallas pequeñas */
+    }
+
+    button[type="submit"],
+    .btn-guardar {
+        font-size: 14px;
+        padding: 10px 14px;
     }
 }

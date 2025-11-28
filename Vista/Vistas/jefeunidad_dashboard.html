@@ -6,229 +6,245 @@
     <title>Dashboard - Jefe de Unidad</title>
 
     <!-- Fuentes e íconos -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
 
-    <!-- Estilo principal -->
-    <link rel="stylesheet" href="../Recurso/Css/dashboard_docente.css">
-
-    <style>
-        /* ======== MODAL DE EVALUACIÓN ======== */
-
-        .modal-eval {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999999;
-        }
-
-        .eval-box {
-            background: #fff;
-            padding: 25px;
-            width: 750px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            animation: fadeIn .3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .eval-buttons {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-            gap: 10px;
-        }
-
-        .btn-guardar {
-            background: #0b6efd;
-            color: #fff;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .btn-cerrar {
-            background: #dc3545;
-            color: #fff;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-    </style>
-
+    <!-- Tu CSS general -->
+    <link rel="stylesheet" href="../Recurso/Css/jefeunidad_dashboard.css" />
+        <link rel="stylesheet" href="../Recurso/Css/admin_dashboard.css" />
+    <!-- Aquí puedes enlazar un CSS específico para el jefe si quieres -->
+    <!-- <link rel="stylesheet" href="../Recurso/Css/dashboard_jefe.css" /> -->
 </head>
 
 <body>
-
-<header class="navbar">
+    <!-- ============================================================
+         NAVBAR
+    ============================================================ -->
+   <header class="navbar topbar-jefe">
     <div class="navbar-left">
-        <img src="../Recurso/img/logo.png" class="logo" alt="Logo">
+        <img src="../Recurso/img/logo.png" class="logo" alt="Logo" />
         <h2>Investigación - Jefe de Unidad</h2>
 
         <nav class="menu">
-            <a href="#" class="active">Inicio</a>
+            <a class="active">Inicio</a>
         </nav>
     </div>
 
     <div class="navbar-right">
-        <span id="nombreJefeNavbar">Jefe de Unidad</span>
-        <img src="../Recurso/img/usuario.png" class="avatar">
-        <button id="btnCerrarSesion" class="btn-cerrar">Cerrar Sesión</button>
+        <span id="nombreJefeNavbar">jefe</span>
+        <img src="../Recurso/img/usuario.png" class="avatar" alt="Usuario" />
+        <button id="btnCerrarSesion" class="btn-modal btn-cerrar">
+            <i class="fa fa-sign-out-alt"></i>
+            Cerrar sesión
+        </button>
     </div>
 </header>
 
 
-<section class="content">
 
-    <!-- BIENVENIDA -->
-    <section class="seccion tarjeta">
-        <h1 id="bienvenidaTexto">Bienvenido, Jefe de Unidad</h1>
+    <!-- ============================================================
+         CONTENIDO PRINCIPAL
+    ============================================================ -->
+    <section class="content">
+
+        <!-- BIENVENIDA -->
+        <section class="seccion tarjeta tarjeta-bienvenida">
+            <h1 id="bienvenidaTexto">Bienvenido, Jefe de Unidad</h1>
+            <p class="texto-intro">
+                Revise y evalúe los proyectos de investigación presentados por los docentes de su unidad.
+            </p>
+        </section>
+
+        <!-- PROYECTOS -->
+        <section class="seccion tarjeta">
+            <h2 class="titulo-seccion">Proyectos presentados por docentes</h2>
+
+            <div class="tabla-responsive">
+                <table id="tablaProyectosJefe" class="tabla display">
+                    <thead>
+                        <tr>
+                            <th>Docente</th>
+                            <th>Proyecto</th>
+                            <th>Tipo</th>
+                            <th>Línea</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyProyectosJefe"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PERFIL -->
+        <section class="seccion tarjeta">
+            <h2 class="titulo-seccion">Perfil de proyecto</h2>
+
+            <div class="tabla-responsive">
+                <table id="tablaPerfilProyecto" class="tabla display">
+                    <thead>
+                        <tr>
+                            <th>Docente</th>
+                            <th>Proyecto</th>
+                            <th>Archivo</th>
+                            <th>Estado</th>
+                            <th>Nota</th>
+                            <th>Observaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyPerfilProyecto"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AVANCES -->
+        <section class="seccion tarjeta">
+            <h2 class="titulo-seccion">Avances del proyecto</h2>
+
+            <div class="tabla-responsive">
+                <table id="tablaAvancesJefe" class="tabla display">
+                    <thead>
+                        <tr>
+                            <th>Avance</th>
+                            <th>Proyecto</th>
+                            <th>Docente</th>
+                            <th>Archivo</th>
+                            <th>Fecha de envío</th>
+                            <th>Informe del evaluador</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyAvancesJefe"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- INFORME FINAL -->
+        <section class="seccion tarjeta">
+            <h2 class="titulo-seccion">Informe final</h2>
+
+            <div class="tabla-responsive">
+                <table id="tablaInformeFinal" class="tabla display">
+                    <thead>
+                        <tr>
+                            <th>Proyecto</th>
+                            <th>Docente</th>
+                            <th>Archivo final</th>
+                            <th>Estado</th>
+                            <th>Nota</th>
+                            <th>Observaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyInformeFinal"></tbody>
+                </table>
+            </div>
+        </section>
     </section>
 
-    <!-- SECCIÓN 1: PROYECTOS DE DOCENTES -->
-    <section class="seccion tarjeta">
-        <h2 class="titulo-seccion">Proyectos Presentados por Docentes</h2>
+    <!-- ============================================================
+         MODAL VISOR DE ARCHIVOS
+    ============================================================ -->
+    <div id="modalVisor" class="modal">
+        <div class="modal-content modal-visor">
+            <div class="modal-header">
+                <h2><i class="fa fa-eye"></i> Visor de archivo</h2>
+            </div>
 
-        <div class="tabla-responsive">
-            <table id="tablaProyectosJefe" class="tabla">
-                <thead>
-                    <tr>
-                        <th>Docente</th>
-                        <th>Proyecto</th>
-                        <th>Tipo</th>
-                        <th>Línea</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyProyectosJefe"></tbody>
-            </table>
+            <iframe id="visorIframe"></iframe>
+
+            <div class="modal-buttons">
+                <button id="btnCerrarVisor" class="btn-modal btn-cerrar">
+                    <i class="fa fa-times"></i>
+                    Cerrar
+                </button>
+            </div>
         </div>
-    </section>
-
-
-    <!-- SECCIÓN 2: PERFIL DEL PROYECTO -->
-    <section class="seccion tarjeta">
-        <h2 class="titulo-seccion">Perfil de Proyecto (Primer Avance)</h2>
-
-        <div class="tabla-responsive">
-            <table id="tablaPerfilProyecto" class="tabla">
-                <thead>
-                    <tr>
-                        <th>Docente</th>
-                        <th>Proyecto</th>
-                        <th>Archivo</th>
-                        <th>Estado</th>
-                        <th>Nota</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyPerfilProyecto"></tbody>
-            </table>
-        </div>
-    </section>
-
-
-    <!-- SECCIÓN 3: AVANCES -->
-    <section class="seccion tarjeta">
-        <h2 class="titulo-seccion">Avances del Proyecto</h2>
-
-        <div class="tabla-responsive">
-            <table id="tablaAvancesJefe" class="tabla">
-                <thead>
-                    <tr>
-                        <th>Avance</th>
-                        <th>Proyecto</th>
-                        <th>Docente</th>
-                        <th>Archivo</th>
-                        <th>Fecha Envío</th>
-                        <th>Informe Evaluador</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyAvancesJefe"></tbody>
-            </table>
-        </div>
-    </section>
-
-
-    <!-- SECCIÓN 4: INFORME FINAL -->
-    <section class="seccion tarjeta">
-        <h2 class="titulo-seccion">Informe Final</h2>
-
-        <div class="tabla-responsive">
-            <table id="tablaInformeFinal" class="tabla">
-                <thead>
-                    <tr>
-                        <th>Proyecto</th>
-                        <th>Docente</th>
-                        <th>Archivo Final</th>
-                        <th>Estado</th>
-                        <th>Nota</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyInformeFinal"></tbody>
-            </table>
-        </div>
-    </section>
-
-</section>
-
-
-<!-- Modal visor existente -->
-<div id="modalVisor" class="modal-visor" style="display:none;">
-    <div class="visor-box">
-        <iframe id="visorIframe"></iframe>
-        <button id="btnCerrarVisor" class="btn-cerrar-modal">Cerrar</button>
     </div>
-</div>
 
+    <!-- ============================================================
+         MODAL EVALUACIÓN
+    ============================================================ -->
+    <div id="modalEvaluacion" class="modal">
+        <div class="modal-content modal-evaluacion">
+            <div class="modal-header">
+                <h2><i class="fa fa-clipboard-check"></i> Evaluación</h2>
+            </div>
 
-<!-- 🔥 NUEVO MODAL DE EVALUACIÓN -->
-<div id="modalEvaluacion" class="modal-eval" style="display:none;">
-    <div class="eval-box">
+            <!-- Aquí el JS inyecta el iframe del anexo + visor/resumen -->
+            <div id="contenidoEvaluacion"></div>
 
-        <h2 id="tituloEvaluacion">Evaluación</h2>
-
-        <div id="contenidoEvaluacion">
-            <!-- Aquí se insertará dinámicamente el formulario de evaluación -->
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cerrar" onclick="cerrarModalEvaluacion()">
+                    <i class="fa fa-times"></i>
+                    Cerrar
+                </button>
+            </div>
         </div>
-
-        <div class="eval-buttons">
-            <button class="btn-guardar" id="btnGuardarEvaluacion">Guardar Evaluación</button>
-            <button class="btn-cerrar" onclick="cerrarModalEvaluacion()">Cerrar</button>
-        </div>
-
     </div>
-</div>
 
+    <!-- ============================================================
+         MODAL DETALLE PROYECTO
+    ============================================================ -->
+    <div id="modalProyecto" class="modal">
+        <div class="modal-content modal-proyecto">
+            <div class="modal-header">
+                <h2><i class="fa fa-file-alt"></i> Detalle del proyecto</h2>
+            </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+            <div id="detalleProyectoContenido"></div>
 
-<!-- JS principal -->
-<script type="module" src="../JavaScript/jefeunidad_dashboard.js"></script>
+            <div class="modal-buttons">
+                <button id="btnImprimirProyecto" class="btn-modal btn-print">
+                    <i class="fa fa-print"></i>
+                    Imprimir
+                </button>
+                <button id="btnCerrarProyecto" class="btn-modal btn-cerrar">
+                    <i class="fa fa-times"></i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <!-- ============================================================
+         MODAL REPORTE DEL PROYECTO (si decides usarlo)
+    ============================================================ -->
+    <div id="modalReporte" class="modal">
+        <div class="modal-content modal-reporte">
+            <div class="modal-header">
+                <h2><i class="fa fa-file-pdf"></i> Reporte del proyecto</h2>
+            </div>
+
+            <div id="contenidoReporte"></div>
+
+            <div class="modal-buttons">
+                <button id="btnImprimirReporte" class="btn-modal btn-print">
+                    <i class="fa fa-print"></i>
+                    Imprimir reporte
+                </button>
+                <button id="btnCerrarReporte" class="btn-modal btn-cerrar">
+                    <i class="fa fa-times"></i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SCRIPTS
+    ============================================================ -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+
+        <script type="module" src="../JavaScript/aplicar_tema_global.js"></script>
+
+    <script type="module" src="../JavaScript/jefeunidad_dashboard.js"></script>
 </body>
 </html>

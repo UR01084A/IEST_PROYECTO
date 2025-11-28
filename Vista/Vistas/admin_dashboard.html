@@ -3,32 +3,235 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard – Administrador</title>
+  <title>Dashboard – Administrador | Investigación</title>
+<!-- Antes de tu admin_dashboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+<script type="module" src="../Js/admin_dashboard.js"></script>
 
   <!-- Bootstrap + Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+
+  <!-- Estilos base -->
+  <style>
+    :root {
+      /* Paleta base (se sobrescribe desde JS) */
+      --color-header-bg: #0f172a;
+      --color-header-text: #ffffff;
+      --color-primary: #0f6cfb;
+      --color-primary-text: #ffffff;
+      --color-page-bg: #f1f5f9;
+      --color-card-bg: #ffffff;
+      --color-card-text: #0f172a;
+
+      /* Colores por defecto para login (los sobrescribe el tema) */
+      --color-login-bg: #0d2c3f;
+      --color-login-card-bg: rgba(255, 255, 255, 0.18);
+      --color-login-text: #ffffff;
+
+      /* NUEVO: variables avanzadas */
+      --color-navbar-link: #ffffff;
+      --color-navbar-link-active: #ffffff;
+      --color-btn-primary-bg: var(--color-primary);
+      --color-btn-primary-text: var(--color-primary-text);
+      --color-table-header-bg: var(--color-primary);
+      --color-table-header-text: var(--color-primary-text);
+
+      /* Integramos con Bootstrap */
+      --bs-body-bg: var(--color-page-bg);
+      --bs-body-color: var(--color-card-text);
+      --bs-primary: var(--color-primary);
+      --bs-link-color: var(--color-primary);
+    }
+
+    body {
+      background: var(--color-page-bg);
+      color: var(--color-card-text);
+    }
+
+    main {
+      min-height: calc(100vh - 64px);
+    }
+
+    .card {
+      border-radius: 0.9rem;
+      background-color: var(--color-card-bg);
+      color: var(--color-card-text);
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    .card-header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .badge-estado {
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* Navbar principal: usa variables del tema */
+    .navbar-main {
+      background-color: var(--color-header-bg);
+      color: var(--color-header-text);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
+
+    .navbar-main .navbar-brand,
+    .navbar-main .navbar-text,
+    .navbar-main .nav-link {
+      color: var(--color-navbar-link);
+    }
+
+    .navbar-main .nav-link {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .navbar-main .nav-link:hover {
+      opacity: 1;
+    }
+
+    .navbar-main .nav-link.active {
+      font-weight: 600;
+      position: relative;
+      color: var(--color-navbar-link-active);
+    }
+
+    .navbar-main .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0.35rem;
+      right: 0.35rem;
+      bottom: -0.2rem;
+      height: 2px;
+      border-radius: 999px;
+      background-color: var(--color-primary);
+    }
+
+    .navbar-main .avatar-admin {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: var(--color-header-text);
+    }
+
+    /* Botón principal: ahora con variables propias */
+    .btn-primary {
+      background-color: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-text);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.9);
+      background-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-text);
+    }
+
+    .btn-outline-primary {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-text);
+    }
+
+    /* Botón pequeño redondeado */
+    .btn-primary.btn-sm,
+    .btn-outline-primary.btn-sm {
+      border-radius: 999px;
+      padding-inline: 1rem;
+    }
+
+    /* Cabeceras de tabla con colores configurables */
+    table thead,
+    table thead tr {
+      background-color: var(--color-table-header-bg);
+      color: var(--color-table-header-text);
+    }
+
+    /* Input búsqueda usuarios */
+    #buscarUsuario::placeholder {
+      font-size: 0.8rem;
+    }
+
+    /* Footer de tarjetas tipo “info” */
+    .card-footer-muted {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    /* Tarjetas KPI un poquito más “dashboard” */
+    .card-kpi .display-6 {
+      font-size: 2.25rem;
+    }
+
+    .card-kpi i {
+      opacity: 0.85;
+    }
+  </style>
 </head>
 
-<body class="bg-light">
-
-  <!-- Topbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background:#0f172a;">
+<body>
+  <!-- =========================================================
+       TOPBAR
+  ========================================================== -->
+  <nav class="navbar navbar-expand-lg navbar-main navbar-dark">
     <div class="container-fluid px-3">
-      <a class="navbar-brand fw-semibold" href="./admin_dashboard.html">
-        <i class="bi bi-shield-lock"></i> Investigación
+      <a
+        class="navbar-brand fw-semibold d-flex align-items-center gap-2"
+        href="./admin_dashboard.html"
+      >
+        <i class="bi bi-shield-lock"></i>
+        <span>Investigación – Admin</span>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarNav">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#topbarNav"
+        aria-controls="topbarNav"
+        aria-expanded="false"
+        aria-label="Mostrar navegación"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="topbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="./admin_dashboard.html">Panel</a></li>
-          <li class="nav-item"><a class="nav-link" href="#usuarios">Usuarios</a></li>
-          <li class="nav-item"><a class="nav-link" href="#auditoria">Auditoría</a></li>
-          <li class="nav-item"><a class="nav-link" href="#perfil">Perfil</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="./admin_dashboard.html">
+              <i class="bi bi-speedometer2 me-1"></i> Panel
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#usuarios">
+              <i class="bi bi-people me-1"></i> Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#configuracion">
+              <i class="bi bi-sliders me-1"></i> Configuración UI
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#auditoria">
+              <i class="bi bi-clipboard-data me-1"></i> Auditoría
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#perfil">
+              <i class="bi bi-person-circle me-1"></i> Perfil
+            </a>
+          </li>
         </ul>
 
         <div class="d-flex align-items-center gap-3 text-white-50">
@@ -36,26 +239,48 @@
             <div id="userName" class="fw-semibold text-white">Administrador</div>
             <small>Rol: Administrador</small>
           </div>
-          <div class="rounded-circle bg-info-subtle text-info d-flex align-items-center justify-content-center" style="width:36px;height:36px;">
+          <div
+            class="rounded-circle bg-info-subtle text-info d-flex align-items-center justify-content-center avatar-admin"
+            style="width: 36px; height: 36px;"
+          >
             <i class="bi bi-person-gear"></i>
           </div>
-<button id="btnLogout" class="btn btn-danger btn-sm">Cerrar sesión</button>
-
+          <button id="btnLogout" class="btn btn-danger btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
+          </button>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Contenido -->
+  <!-- =========================================================
+       CONTENIDO PRINCIPAL
+  ========================================================== -->
   <main class="container-xxl py-4">
+    <!-- Encabezado del panel -->
+    <section class="mb-3">
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2"
+      >
+        <div>
+          <h1 class="h4 mb-1">Panel de administración</h1>
+          <p class="text-secondary mb-0">
+            Administra usuarios, la configuración visual del sistema y las plantillas de interfaz,
+            sin intervenir en el trabajo de docentes ni evaluadores.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <!-- KPIs -->
-    <section class="row g-3 mb-4">
+    <section class="row g-3 mb-4" aria-label="Indicadores principales">
       <div class="col-12 col-md-3">
-        <div class="card border-info-subtle">
+        <div class="card card-kpi border-info-subtle shadow-sm h-100">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
-              <div class="text-secondary small fw-semibold">Usuarios Totales</div>
+              <div class="text-secondary small fw-semibold text-uppercase">
+                Usuarios Totales
+              </div>
               <div id="kpiTotal" class="display-6 fw-bold">0</div>
             </div>
             <i class="bi bi-people fs-2 text-info"></i>
@@ -64,10 +289,10 @@
       </div>
 
       <div class="col-12 col-md-3">
-        <div class="card border-success-subtle">
+        <div class="card card-kpi border-success-subtle shadow-sm h-100">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
-              <div class="text-secondary small fw-semibold">Activos</div>
+              <div class="text-secondary small fw-semibold text-uppercase">Activos</div>
               <div id="kpiActivos" class="display-6 fw-bold">0</div>
             </div>
             <i class="bi bi-check2-circle fs-2 text-success"></i>
@@ -76,10 +301,10 @@
       </div>
 
       <div class="col-12 col-md-3">
-        <div class="card border-warning-subtle">
+        <div class="card card-kpi border-warning-subtle shadow-sm h-100">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
-              <div class="text-secondary small fw-semibold">Inactivos</div>
+              <div class="text-secondary small fw-semibold text-uppercase">Inactivos</div>
               <div id="kpiInactivos" class="display-6 fw-bold">0</div>
             </div>
             <i class="bi bi-slash-circle fs-2 text-warning"></i>
@@ -88,11 +313,17 @@
       </div>
 
       <div class="col-12 col-md-3">
-        <div class="card border-primary-subtle">
+        <div class="card card-kpi border-primary-subtle shadow-sm h-100">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
-              <div class="text-secondary small fw-semibold">Docentes / Evaluadores</div>
-              <div class="fw-bold"><span id="kpiDocentes">0</span> / <span id="kpiEvaluadores">0</span></div>
+              <div class="text-secondary small fw-semibold text-uppercase">
+                Docentes / Evaluadores
+              </div>
+              <div class="fw-bold fs-4">
+                <span id="kpiDocentes">0</span>
+                <span class="text-secondary">/</span>
+                <span id="kpiEvaluadores">0</span>
+              </div>
             </div>
             <i class="bi bi-pie-chart fs-2 text-primary"></i>
           </div>
@@ -100,14 +331,44 @@
       </div>
     </section>
 
-    <!-- Gestión de usuarios -->
-    <section id="usuarios" class="card shadow-sm">
-      <div class="card-header bg-white d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Gestión de Usuarios</h5>
-        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNuevo">
-          <i class="bi bi-plus-lg me-1"></i>Nuevo Usuario
-        </button>
+    <!-- =====================================================
+         GESTIÓN DE USUARIOS
+    ====================================================== -->
+    <section id="usuarios" class="card shadow-sm mb-4" aria-label="Gestión de usuarios">
+      <div
+        class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2"
+      >
+        <div>
+          <h5 class="mb-0">
+            <i class="bi bi-person-lines-fill me-2"></i>Gestión de Usuarios
+          </h5>
+          <small class="text-secondary">
+            Crea, edita, desactiva o elimina cuentas. No se muestran contraseñas reales.
+          </small>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text bg-body">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="buscarUsuario"
+              placeholder="Buscar por nombre o correo…"
+            />
+          </div>
+          <button
+            class="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalNuevo"
+          >
+            <i class="bi bi-plus-lg me-1"></i>Nuevo Usuario
+          </button>
+        </div>
       </div>
+
       <div class="card-body p-0">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
@@ -118,110 +379,1155 @@
                 <th>Rol</th>
                 <th>Estado</th>
                 <th>Creado</th>
-                <th style="width:140px;">Acciones</th>
+                <th style="width: 180px;">Acciones</th>
               </tr>
             </thead>
             <tbody id="tablaUsuariosBody">
-              <tr><td colspan="6" class="text-secondary py-3 ps-3">Cargando…</td></tr>
+              <tr>
+                <td colspan="6" class="text-secondary py-3 ps-3">
+                  Cargando lista de usuarios…
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- Auditoría (placeholder visual para HU) -->
-    <section id="auditoria" class="card shadow-sm mt-4">
-      <div class="card-header bg-white">
-        <h5 class="mb-0"><i class="bi bi-clipboard-data me-2"></i>Auditoría (registro de acciones)</h5>
-      </div>
-      <div class="card-body text-secondary">
-        Este módulo registrará las operaciones administrativas (crear, modificar, desactivar).
+    <!-- =====================================================
+         CONFIGURACIÓN UI / FORMULARIOS / FECHAS
+    ====================================================== -->
+    <section
+      id="configuracion"
+      class="mb-4"
+      aria-label="Configuración de interfaz"
+    >
+      <div class="row g-3">
+        <!-- Tema visual -->
+        <div class="col-12 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title mb-1">
+                <i class="bi bi-palette2 me-2"></i>Tema visual
+              </h5>
+              <p class="text-secondary small mb-3">
+                Ajusta colores principales del panel docente, evaluador y administrador
+                (solo la interfaz, no la lógica de evaluación).
+              </p>
+              <button
+                class="btn btn-outline-primary btn-sm mt-auto"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modalTema"
+              >
+                <i class="bi bi-sliders me-1"></i>Configurar tema
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fechas globales de entrega -->
+        <div class="col-12 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title mb-1">
+                <i class="bi bi-calendar-range me-2"></i>Fechas globales de entrega
+              </h5>
+              <p class="text-secondary small mb-3">
+                Define fechas de referencia por tipo de avance (plantilla). Los docentes
+                solo verán estas fechas como guía.
+              </p>
+              <button
+                class="btn btn-outline-primary btn-sm mt-auto"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modalFechasGlobales"
+              >
+                <i class="bi bi-calendar-event me-1"></i>Gestionar fechas
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formularios y anexos -->
+        <div class="col-12 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title mb-1">
+                <i class="bi bi-file-earmark-text me-2"></i>Formularios y anexos
+              </h5>
+              <p class="text-secondary small mb-3">
+                Modifica la presentación de anexos, formularios y plantillas de impresión
+                (textos, encabezados, logos, estilos).
+              </p>
+              <button
+                class="btn btn-outline-primary btn-sm mt-auto"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modalFormularios"
+              >
+                <i class="bi bi-layout-text-window-reverse me-1"></i>Configurar formularios
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- =====================================================
+         AUDITORÍA
+    ====================================================== -->
+    <section id="auditoria" class="card shadow-sm mb-4">
+      <div
+        class="card-header bg-white d-flex justify-content-between align-items-center"
+      >
+        <div>
+          <h5 class="mb-0">
+            <i class="bi bi-clipboard-data me-2"></i>Auditoría (registro de acciones)
+          </h5>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#modalAuditoria"
+        >
+          <i class="bi bi-funnel me-1"></i>Ver registros
+        </button>
+      </div>
+      <div class="card-body text-secondary">
+        <p class="mb-2">
+          Este módulo registrará las operaciones administrativas realizadas
+          (crear usuario, editar datos, cambiar tema, modificar plantillas, etc.).
+        </p>
+        <div class="alert alert-info mb-0">
+          Vista de ejemplo. La carga de datos se hará desde la tabla
+          <code>auditoria_admin</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         PERFIL DEL ADMIN
+    ====================================================== -->
+    <section id="perfil" class="card shadow-sm mb-4">
+      <div
+        class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3"
+      >
+        <div>
+          <h5 class="mb-1">
+            <i class="bi bi-person-circle me-2"></i>Mi perfil de administrador
+          </h5>
+          <p class="text-secondary small mb-0">
+            Revisa tu información de cuenta, actualiza tu foto de perfil o cambia tu contraseña.
+          </p>
+        </div>
+        <a
+          href="../Vistas/perfil.html"
+          class="btn btn-outline-secondary btn-sm"
+        >
+          <i class="bi bi-arrow-right-circle me-1"></i> Ir a mi perfil
+        </a>
+      </div>
+    </section>
   </main>
 
-  <!-- MODAL: Nuevo usuario -->
-  <div class="modal fade" id="modalNuevo" tabindex="-1" aria-hidden="true">
+  <!-- =========================================================
+       MODALES
+  ========================================================== -->
+
+  <!-- MODAL: Nuevo usuario (nombres + apellidos + correo generado) -->
+  <div
+    class="modal fade"
+    id="modalNuevo"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <form class="modal-content" id="formNuevo">
         <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Registrar nuevo usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <h5 class="modal-title">
+            <i class="bi bi-person-plus me-2"></i>Registrar nuevo usuario
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
         </div>
+
         <div class="modal-body">
-          <div class="mb-2">
-            <label class="form-label">Nombre completo</label>
-            <input type="text" class="form-control" id="nu_nombre" required>
+          <!-- Nombres y apellidos -->
+          <div class="row g-2 mb-2">
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="nu_nombres">Nombres</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nu_nombres"
+                placeholder="Ej: Franklin Cristian"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="nu_apellidos">Apellidos</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nu_apellidos"
+                placeholder="Ej: Aldana Luna"
+                required
+              />
+            </div>
           </div>
+
+          <!-- Correo institucional (se genera automáticamente, editable) -->
           <div class="mb-2">
-            <label class="form-label">Correo institucional</label>
-            <input type="email" class="form-control" id="nu_correo" required>
+            <label class="form-label" for="nu_correo">Correo institucional</label>
+            <input
+              type="email"
+              class="form-control"
+              id="nu_correo"
+              placeholder="Se generará automáticamente"
+              required
+            />
+            <div class="form-text">
+              Se genera a partir de nombres y apellidos con el dominio institucional.
+              Puedes ajustarlo si es necesario.
+            </div>
           </div>
+
+          <!-- Rol + contraseña -->
           <div class="row g-2">
-            <div class="col-6">
-              <label class="form-label">Rol</label>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="nu_rol">Rol</label>
               <select id="nu_rol" class="form-select" required>
                 <option value="3">Docente Investigador</option>
                 <option value="2">Jefe de Unidad (Evaluador)</option>
                 <option value="1">Administrador</option>
               </select>
             </div>
-            <div class="col-6">
-              <label class="form-label">Contraseña temporal</label>
-              <input type="text" class="form-control" id="nu_pass" placeholder="Temporal" required>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="nu_pass">Contraseña temporal</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nu_pass"
+                placeholder="Temporal"
+                required
+              />
             </div>
           </div>
-          <div class="form-text">La contraseña temporal no se mostrará nuevamente.</div>
+
+          <div class="form-text mt-1">
+            La contraseña temporal no se mostrará nuevamente.
+          </div>
         </div>
+
         <div class="modal-footer">
-          <button class="btn btn-primary" type="submit">Guardar</button>
-          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="submit">
+            <i class="bi bi-check-lg me-1"></i>Guardar
+          </button>
+          <button
+            class="btn btn-light"
+            type="button"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL: Editar usuario -->
-  <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+  <!-- MODAL: Editar usuario (nombres + apellidos) -->
+  <div
+    class="modal fade"
+    id="modalEditar"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <form class="modal-content" id="formEditar">
         <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Editar usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <h5 class="modal-title">
+            <i class="bi bi-pencil-square me-2"></i>Editar usuario
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
         </div>
+
         <div class="modal-body">
-          <input type="hidden" id="ed_id">
-          <div class="mb-2">
-            <label class="form-label">Nombre completo</label>
-            <input type="text" class="form-control" id="ed_nombre" required>
+          <input type="hidden" id="ed_id" />
+
+          <div class="row g-2 mb-2">
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="ed_nombres">Nombres</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ed_nombres"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="ed_apellidos">Apellidos</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ed_apellidos"
+                required
+              />
+            </div>
           </div>
+
           <div class="mb-2">
-            <label class="form-label">Correo institucional</label>
-            <input type="email" class="form-control" id="ed_correo" required>
+            <label class="form-label" for="ed_correo">Correo institucional</label>
+            <input
+              type="email"
+              class="form-control"
+              id="ed_correo"
+              required
+            />
+            <div class="form-text">
+              El administrador puede corregir el correo si es necesario.
+            </div>
           </div>
+
           <div class="mb-2">
-            <label class="form-label">Rol</label>
+            <label class="form-label" for="ed_rol">Rol</label>
             <select id="ed_rol" class="form-select" required>
               <option value="3">Docente Investigador</option>
               <option value="2">Jefe de Unidad (Evaluador)</option>
               <option value="1">Administrador</option>
             </select>
           </div>
-          <div class="form-text">El administrador no visualiza contraseñas reales.</div>
+
+          <div class="form-text">
+            El administrador no visualiza contraseñas reales.
+          </div>
         </div>
+
         <div class="modal-footer">
-          <button class="btn btn-primary" type="submit">Guardar cambios</button>
-          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="submit">
+            <i class="bi bi-check-lg me-1"></i>Guardar cambios
+          </button>
+          <button
+            class="btn btn-light"
+            type="button"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- MODAL: Tema visual -->
+  <div
+    class="modal fade"
+    id="modalTema"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <form class="modal-content" id="formTema">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-palette2 me-2"></i>Configurar tema visual
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
+        </div>
 
-  <!-- Lógica del dashboard (ruta igual que docente) -->
+        <div class="modal-body">
+          <p class="text-secondary small mb-3">
+            Ajusta los colores generales del panel (docente, evaluador y administrador).
+            Solo afecta al <strong>diseño</strong>, no a la lógica de evaluación.
+          </p>
+
+          <div class="row g-3">
+            <!-- Esquema general -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">Esquema</label>
+              <select class="form-select form-select-sm" id="tema_esquema">
+                <option value="light">Claro</option>
+                <option value="dark">Oscuro</option>
+                <option value="azul" selected>Azul institucional</option>
+                <option value="verde">Verde suave</option>
+                <option value="vino">Vino / Burdeos</option>
+              </select>
+            </div>
+
+            <!-- Color primario -->
+            <div class="col-6 col-md-4">
+              <label class="form-label small fw-semibold">Color primario</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_primary_hex"
+                  value="0f6cfb"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_primary_color"
+                  value="#0f6cfb"
+                  title="Elegir color"
+                />
+              </div>
+              <div class="form-text">
+                Botones principales, enlaces y resaltados.
+              </div>
+            </div>
+
+            <!-- Color de encabezado -->
+            <div class="col-6 col-md-4">
+              <label class="form-label small fw-semibold">
+                Color de la barra superior
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_header_hex"
+                  value="0f172a"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_header_color"
+                  value="#0f172a"
+                  title="Elegir color"
+                />
+              </div>
+              <div class="form-text">Navbar superior del sistema.</div>
+            </div>
+
+            <!-- Fondo de contenido -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold mt-2 mt-md-0">
+                Fondo del contenido
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_background_hex"
+                  value="f1f5f9"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_background_color"
+                  value="#f1f5f9"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Tarjetas -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold mt-2 mt-md-0">
+                Fondo de tarjetas
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_card_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_card_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Texto -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold mt-2 mt-md-0">
+                Color de texto principal
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_text_hex"
+                  value="0f172a"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_text_color"
+                  value="#0f172a"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- color login -->
+          <hr class="mt-3 mb-2" />
+          <div class="small fw-semibold mb-1">
+            Colores de la pantalla de inicio de sesión
+          </div>
+
+          <div class="row g-3">
+            <!-- Fondo de la pantalla de login -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">
+                Fondo general (login)
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_login_bg_hex"
+                  value="0d2c3f"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_login_bg_color"
+                  value="#0d2c3f"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Tarjeta del login -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">
+                Tarjeta / recuadro (login)
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_login_card_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_login_card_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Texto en login -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">Texto (login)</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_login_text_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_login_text_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- AJUSTES AVANZADOS -->
+          <hr class="mt-3 mb-2" />
+          <div class="small fw-semibold mb-1">Ajustes avanzados (opcionales)</div>
+
+          <div class="row g-3">
+            <!-- Texto de la barra de menú -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">Texto de la barra de menú</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_nav_text_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_nav_text_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Botón principal (fondo) -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">Botón principal (fondo)</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_btn_primary_bg_hex"
+                  value="0f6cfb"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_btn_primary_bg_color"
+                  value="#0f6cfb"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Botón principal (texto) -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold">Botón principal (texto)</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_btn_primary_text_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_btn_primary_text_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Cabecera de tablas (fondo) -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold mt-2 mt-md-0">
+                Cabecera de tablas (fondo)
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_table_header_bg_hex"
+                  value="0f6cfb"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_table_header_bg_color"
+                  value="#0f6cfb"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+
+            <!-- Cabecera de tablas (texto) -->
+            <div class="col-12 col-md-4">
+              <label class="form-label small fw-semibold mt-2 mt-md-0">
+                Cabecera de tablas (texto)
+              </label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">#</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tema_table_header_text_hex"
+                  value="ffffff"
+                />
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="tema_table_header_text_color"
+                  value="#ffffff"
+                  title="Elegir color"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Vista previa rápida -->
+          <hr class="my-3" />
+          <div class="small fw-semibold mb-2">Vista previa</div>
+          <div class="border rounded-3 p-3 bg-light" id="previewTema">
+            <div
+              class="p-2 rounded-3 mb-3 d-flex justify-content-between align-items-center"
+              style="background: #0f172a; color: #ffffff;"
+            >
+              <span class="fw-semibold">Barra superior</span>
+              <span class="badge bg-primary">Botón</span>
+            </div>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <div class="p-3 rounded-3 h-100" style="background: #ffffff;">
+                  <div class="small fw-semibold mb-1">Tarjeta de ejemplo</div>
+                  <div class="small text-muted">Contenido del dashboard…</div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="border rounded-3 p-2 h-100 bg-white">
+                  <div class="small text-muted mb-1">Tabla de ejemplo</div>
+                  <table class="table table-sm mb-0">
+                    <thead>
+                      <tr>
+                        <th>Columna A</th>
+                        <th>Columna B</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Dato</td>
+                        <td>Dato</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex gap-2 mt-2">
+                    <span class="badge bg-primary">Píldora</span>
+                    <span
+                      class="badge bg-outline border border-primary text-primary"
+                      >Etiqueta</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-text mt-2">
+              La vista previa es solo ilustrativa; los cambios reales se
+              aplicarán desde la configuración guardada.
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-sm" type="submit">
+            <i class="bi bi-check-lg me-1"></i>Guardar cambios
+          </button>
+          <button
+            class="btn btn-light btn-sm"
+            type="button"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Fechas globales de entrega -->
+  <div
+    class="modal fade"
+    id="modalFechasGlobales"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+  >
+    <div
+      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+    >
+      <form class="modal-content" id="formFechasGlobales">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-calendar-range me-2"></i>Fechas globales de entrega
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-secondary small">
+            Define fechas de referencia por tipo de avance. Estas fechas se
+            mostrarán como guía en el panel del docente, pero no bloquean el
+            envío real.
+          </p>
+
+          <div
+            class="d-flex justify-content-between align-items-center mb-2"
+          >
+            <div class="small fw-semibold">Listado de fechas</div>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              id="btnAgregarFechaGlobal"
+            >
+              <i class="bi bi-plus-lg me-1"></i>Agregar fila
+            </button>
+          </div>
+
+          <div class="table-responsive border rounded">
+            <table class="table table-sm align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 35%;">Tipo de avance</th>
+                  <th style="width: 25%;">Fecha límite</th>
+                  <th style="width: 25%;">Descripción / nota</th>
+                  <th style="width: 15%;"></th>
+                </tr>
+              </thead>
+              <tbody id="tbodyFechasGlobales">
+                <!-- Filas generadas por JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-text mt-2">
+            Luego, desde JS, podrás sincronizar estas filas con la tabla
+            <code>fechas_entrega_global</code> en la base de datos.
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-sm" type="submit">
+            <i class="bi bi-check-lg me-1"></i>Guardar fechas
+          </button>
+          <button
+            class="btn btn-light btn-sm"
+            type="button"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Formularios / anexos -->
+  <div
+    class="modal fade"
+    id="modalFormularios"
+    tabindex="-1"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+  >
+    <div
+      class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-file-earmark-text me-2"></i>Configurar formularios y anexos
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-secondary small mb-3">
+            Administra textos, encabezados, logos y estructura visual de los
+            anexos y formularios. Los cambios afectan solo la
+            <strong>presentación</strong> de los documentos.
+          </p>
+
+          <div class="row g-3">
+            <!-- Lista de anexos -->
+            <div class="col-12 col-lg-4">
+              <div class="border rounded-3 h-100">
+                <div class="p-2 border-bottom bg-light">
+                  <div class="small fw-semibold">
+                    <i class="bi bi-journal-text me-1"></i>Lista de anexos /
+                    formularios
+                  </div>
+                </div>
+                <div class="list-group list-group-flush" id="listaAnexos">
+                  <div class="p-3 text-secondary small">
+                    La lista de anexos se cargará desde
+                    <code>anexos_config</code>.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Editor de formulario -->
+            <div class="col-12 col-lg-8">
+              <form
+                id="formAnexoConfig"
+                class="border rounded-3 h-100 d-flex flex-column"
+              >
+                <div
+                  class="p-2 border-bottom bg-light d-flex align-items-center justify-content-between"
+                >
+                  <div class="small fw-semibold">
+                    <i class="bi bi-layout-text-window-reverse me-1"></i>Diseño
+                    del formulario
+                  </div>
+                  <span
+                    id="anexoCodigo"
+                    class="badge bg-secondary-subtle text-secondary-emphasis small"
+                  ></span>
+                </div>
+
+                <div class="p-3 flex-grow-1 d-flex flex-column gap-3">
+                  <div class="row g-2">
+                    <div class="col-md-8">
+                      <label class="form-label small fw-semibold">
+                        Título a mostrar
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="anexoTitulo"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label small fw-semibold">Estado</label>
+                      <select
+                        id="anexoActivo"
+                        class="form-select form-select-sm"
+                      >
+                        <option value="true">Visible / Habilitado</option>
+                        <option value="false">Oculto</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label small fw-semibold">
+                      Encabezado (HTML simple)
+                    </label>
+                    <textarea
+                      class="form-control form-control-sm"
+                      id="anexoHeader"
+                      rows="2"
+                      placeholder="Ej: Título de la facultad, logo, datos de la institución…"
+                    ></textarea>
+                  </div>
+
+                  <div>
+                    <label class="form-label small fw-semibold">
+                      Cuerpo / plantilla
+                    </label>
+                    <textarea
+                      class="form-control form-control-sm"
+                      id="anexoBody"
+                      rows="4"
+                      placeholder="Zona principal del formulario (tablas, campos, etc.)"
+                    ></textarea>
+                    <div class="form-text">
+                      Puedes usar HTML básico (table, tr, td, p, strong). Evita
+                      scripts.
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label small fw-semibold">
+                      Pie de página
+                    </label>
+                    <textarea
+                      class="form-control form-control-sm"
+                      id="anexoFooter"
+                      rows="2"
+                      placeholder="Firmas, sellos o notas finales"
+                    ></textarea>
+                  </div>
+
+                  <div class="row g-2">
+                    <div class="col-md-6">
+                      <label class="form-label small fw-semibold">
+                        Orientación de impresión
+                      </label>
+                      <select
+                        id="anexoOrientacion"
+                        class="form-select form-select-sm"
+                      >
+                        <option value="portrait">Vertical (A4)</option>
+                        <option value="landscape">Horizontal (A4)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label small fw-semibold">
+                        Estilo de borde
+                      </label>
+                      <select
+                        id="anexoBorder"
+                        class="form-select form-select-sm"
+                      >
+                        <option value="simple">Línea simple</option>
+                        <option value="doble">Línea doble</option>
+                        <option value="none">Sin borde</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="border-top p-2 d-flex justify-content-between align-items-center"
+                >
+                  <small class="text-secondary">
+                    La vista previa de impresión se implementará en el módulo de
+                    reportes.
+                  </small>
+                  <div class="d-flex gap-2">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary btn-sm"
+                      id="btnVistaPreviaAnexo"
+                    >
+                      <i class="bi bi-eye me-1"></i>Vista previa
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                      <i class="bi bi-save me-1"></i>Guardar cambios
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer d-none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Auditoría (vista flotante de registros) -->
+  <div
+    class="modal fade"
+    id="modalAuditoria"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-clipboard-data me-2"></i>Registros de auditoría
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-secondary small">
+            Aquí se mostrarán los eventos registrados en
+            <code>auditoria_admin</code> (creación y edición de usuarios,
+            cambios de tema, configuración de formularios, etc.).
+          </p>
+
+          <div class="row g-2 mb-3">
+            <div class="col-md-4">
+              <label class="form-label small">Rango de fechas</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                id="auditoria_fecha_desde"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small">&nbsp;</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                id="auditoria_fecha_hasta"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small">Acción / módulo</label>
+              <select
+                class="form-select form-select-sm"
+                id="auditoria_accion"
+              >
+                <option value="">Todos</option>
+                <option value="usuarios">Usuarios</option>
+                <option value="tema">Tema visual</option>
+                <option value="fechas">Fechas globales</option>
+                <option value="formularios">Formularios</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive border rounded">
+            <table class="table table-sm align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Usuario</th>
+                  <th>Módulo</th>
+                  <th>Acción</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyAuditoria">
+                <tr>
+                  <td
+                    colspan="5"
+                    class="text-secondary small text-center py-3"
+                  >
+                    La tabla se llenará desde
+                    <code>auditoria_admin</code> usando JavaScript.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-light btn-sm"
+            type="button"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SCRIPTS
+  ========================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Aplica el tema global guardado por el admin (colores, login, etc.) -->
+  <script type="module" src="../JavaScript/aplicar_tema_global.js"></script>
+  <!-- Tu lógica del dashboard: carga usuarios, KPIs, etc. -->
   <script type="module" src="../JavaScript/admin_dashboard.js"></script>
 </body>
 </html>

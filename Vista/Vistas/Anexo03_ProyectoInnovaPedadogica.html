@@ -1,140 +1,432 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>ANEXO 03 - Innovación Pedagógica</title>
-<link rel="stylesheet" href="../Recurso/Css/evaluar_form.css">
+    <meta charset="UTF-8">
+    <title>ANEXO 03 - Evaluación Proyecto de Innovación Pedagógica</title>
+
+    <!-- Estilos generales del formulario -->
+    <link rel="stylesheet" href="../Recurso/Css/evaluar_form.css">
 </head>
 <body>
 
-<h2>ANEXO 03 – Evaluación Proyecto de Innovación Pedagógica</h2>
+<main class="anexo-container">
 
-<form id="formAnexo03">
+    <!-- ENCABEZADO -->
+    <header class="anexo-header">
+        <h1>ANEXO 03</h1>
+        <h2>Evaluación del Proyecto de Innovación Pedagógica</h2>
+        <p class="anexo-descripcion">
+            Complete los criterios marcando <strong>Sí</strong> o <strong>No</strong>. 
+            Al finalizar, haga clic en <strong>Guardar evaluación</strong> para enviar la calificación al sistema.
+        </p>
+        <hr>
+    </header>
 
-<h3>I. Datos Generales</h3>
+    <form id="formAnexo03" class="anexo-form">
 
-<div class="preguntas">
-  <label>1. Describe línea de investigación</label>
-  <select name="c1"><option value="1">Sí</option><option value="0">No</option></select>
+        <!-- ======================================================= -->
+        <!-- I. DATOS GENERALES -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>I. Datos generales</h3>
+            <div class="preguntas">
 
-  <label>2. Describe beneficiarios</label>
-  <select name="c2"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c1">1. Describe la línea de investigación</label>
+                    <select id="c1" name="c1">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>3. Menciona costo</label>
-  <select name="c3"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c2">2. Describe a los beneficiarios</label>
+                    <select id="c2" name="c2">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>4. Explica financiamiento</label>
-  <select name="c4"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c3">3. Menciona el costo del proyecto</label>
+                    <select id="c3" name="c3">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>5. Lugar de ejecución</label>
-  <select name="c5"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c4">4. Explica la fuente de financiamiento</label>
+                    <select id="c4" name="c4">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>II. Título</h3>
+                <div class="campo">
+                    <label for="c5">5. Indica el lugar de ejecución</label>
+                    <select id="c5" name="c5">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<div class="preguntas">
-  <label>6. Refleja listado de situaciones problemáticas</label>
-  <select name="c6"><option value="1">Sí</option><option value="0">No</option></select>
+            </div>
+        </section>
 
-  <label>7. Lista problemas relevantes</label>
-  <select name="c7"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+        <!-- ======================================================= -->
+        <!-- II. TÍTULO -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>II. Título</h3>
+            <div class="preguntas">
 
-<h3>III. Problema</h3>
+                <div class="campo">
+                    <label for="c6">6. Refleja el listado de situaciones problemáticas</label>
+                    <select id="c6" name="c6">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<div class="preguntas">
-  <label>8. Reagrupa problemas</label>
-  <select name="c8"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c7">7. Enumera los problemas más relevantes</label>
+                    <select id="c7" name="c7">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>9. Prioriza problemas</label>
-  <select name="c9"><option value="1">Sí</option><option value="0">No</option></select>
+            </div>
+        </section>
 
-  <label>10. Árbol de problemas</label>
-  <select name="c10"><option value="1">Sí</option><option value="0">No</option></select>
+        <!-- ======================================================= -->
+        <!-- III. PROBLEMA -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>III. Problema</h3>
+            <div class="preguntas">
 
-  <label>11. Árbol de potencialidades</label>
-  <select name="c11"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c8">8. Reagrupa adecuadamente los problemas identificados</label>
+                    <select id="c8" name="c8">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>12. Define causas/efectos</label>
-  <select name="c12"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c9">9. Prioriza los problemas de forma coherente</label>
+                    <select id="c9" name="c9">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>IV. Objetivos</h3>
+                <div class="campo">
+                    <label for="c10">10. Presenta un árbol de problemas adecuado</label>
+                    <select id="c10" name="c10">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<div class="preguntas">
-  <label>13. Explica objetivo central</label>
-  <select name="c13"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c11">11. Presenta un árbol de potencialidades</label>
+                    <select id="c11" name="c11">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>14. Resultados del proyecto</label>
-  <select name="c14"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c12">12. Define de forma clara causas y efectos</label>
+                    <select id="c12" name="c12">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>V. Fundamentación</h3>
+            </div>
+        </section>
 
-<div class="preguntas">
-  <label>15. Fundamentación teórica correcta</label>
-  <select name="c15"><option value="1">Sí</option><option value="0">No</option></select>
+        <!-- ======================================================= -->
+        <!-- IV. OBJETIVOS -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>IV. Objetivos</h3>
+            <div class="preguntas">
 
-  <label>16. Tipo de investigación</label>
-  <select name="c16"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c13">13. Explica claramente el objetivo central del proyecto</label>
+                    <select id="c13" name="c13">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>17. Beneficiarios directos/indirectos</label>
-  <select name="c17"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c14">14. Presenta los resultados esperados del proyecto</label>
+                    <select id="c14" name="c14">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>VI. Metodología</h3>
+            </div>
+        </section>
 
-<div class="preguntas">
-  <label>18. Lugar y periodo de investigación</label>
-  <select name="c18"><option value="1">Sí</option><option value="0">No</option></select>
+        <!-- ======================================================= -->
+        <!-- V. FUNDAMENTACIÓN -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>V. Fundamentación</h3>
+            <div class="preguntas">
 
-  <label>19. Define población beneficiaria</label>
-  <select name="c19"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c15">15. Presenta una fundamentación teórica adecuada</label>
+                    <select id="c15" name="c15">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>20. Identifica presupuesto</label>
-  <select name="c20"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c16">16. Explica el tipo de investigación</label>
+                    <select id="c16" name="c16">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>21. Metas del proyecto</label>
-  <select name="c21"><option value="1">Sí</option><option value="0">No</option></select>
+                <div class="campo">
+                    <label for="c17">17. Identifica beneficiarios directos e indirectos</label>
+                    <select id="c17" name="c17">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-  <label>22. Cronograma</label>
-  <select name="c22"><option value="1">Sí</option><option value="0">No</option></select>
+            </div>
+        </section>
 
-  <label>23. Responsables</label>
-  <select name="c23"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+        <!-- ======================================================= -->
+        <!-- VI. METODOLOGÍA -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>VI. Metodología</h3>
+            <div class="preguntas">
 
-<h3>VII. Referencias</h3>
-<div class="preguntas">
-  <label>24. Referencias APA</label>
-  <select name="c24"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c18">18. Señala el lugar y periodo de investigación</label>
+                    <select id="c18" name="c18">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>VIII. Actividades</h3>
-<div class="preguntas">
-  <label>25. Actividades correctas</label>
-  <select name="c25"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c19">19. Define claramente la población beneficiaria</label>
+                    <select id="c19" name="c19">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>IX. Anexos</h3>
-<div class="preguntas">
-  <label>26. Anexos completos</label>
-  <select name="c26"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c20">20. Identifica el presupuesto del proyecto</label>
+                    <select id="c20" name="c20">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<h3>X. Puntaje adicional</h3>
-<div class="preguntas">
-  <label>27. Cumple estructura general</label>
-  <select name="c27"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+                <div class="campo">
+                    <label for="c21">21. Establece metas claras del proyecto</label>
+                    <select id="c21" name="c21">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<hr>
+                <div class="campo">
+                    <label for="c22">22. Presenta un cronograma de actividades</label>
+                    <select id="c22" name="c22">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-<button type="submit">Guardar Evaluación</button>
+                <div class="campo">
+                    <label for="c23">23. Identifica a los responsables del proyecto</label>
+                    <select id="c23" name="c23">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-</form>
+            </div>
+        </section>
 
-<script src="../JavaScript/evaluar_anexo03.js"></script>
+        <!-- ======================================================= -->
+        <!-- VII. REFERENCIAS -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>VII. Referencias</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c24">24. Las referencias bibliográficas siguen el estilo APA</label>
+                    <select id="c24" name="c24">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- VIII. ACTIVIDADES -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>VIII. Actividades</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c25">25. Las actividades propuestas son coherentes y pertinentes</label>
+                    <select id="c25" name="c25">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- IX. ANEXOS -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>IX. Anexos</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c26">26. Los anexos están completos y correctamente presentados</label>
+                    <select id="c26" name="c26">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- X. PUNTAJE ADICIONAL -->
+        <!-- ======================================================= -->
+        <section class="anexo-bloque">
+            <h3>X. Puntaje adicional</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c27">27. Cumple con la estructura general del proyecto</label>
+                    <select id="c27" name="c27">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- BOTÓN DE ENVÍO -->
+        <div class="anexo-acciones">
+            <button id="btnEnviar" type="submit" class="btn-guardar">
+                Guardar evaluación
+            </button>
+        </div>
+
+    </form>
+</main>
+
+<!-- ======================================================= -->
+<!-- SCRIPT DEL SISTEMA DE EVALUACIÓN -->
+<!-- ======================================================= -->
+<script>
+document.getElementById("formAnexo03").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const btn = document.getElementById("btnEnviar");
+    btn.disabled = true;
+    btn.textContent = "Enviando...";
+
+    const form = new FormData(e.target);
+    let suma = 0;
+
+    const TOTAL = 27; // total de criterios del ANEXO 03
+
+    for (let i = 1; i <= TOTAL; i++) {
+        const val = Number(form.get("c" + i));
+        if (!isNaN(val)) suma += val;
+    }
+
+    const nota = Math.round((suma / TOTAL) * 20);
+
+    const observaciones =
+        nota >= 11
+            ? "Proyecto aprobado según los criterios establecidos."
+            : "Proyecto desaprobado. Se recomienda revisar los criterios no cumplidos.";
+
+    parent.postMessage(
+        {
+            tipo: "evaluacion",
+            nota,
+            observaciones,
+            puntaje_total: suma,
+            detalles: {
+                tipo: "perfil",
+                total_criterios: TOTAL,
+                puntaje: suma,
+                calculado_en: new Date().toISOString()
+            }
+        },
+        "*"
+    );
+
+    alert("Evaluación enviada correctamente.");
+    btn.textContent = "Enviado ✔";
+});
+</script>
 
 </body>
 </html>

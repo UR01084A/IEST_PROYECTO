@@ -1,56 +1,191 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Registrar Proyecto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fuentes e íconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Estilos generales del dashboard -->
+    <link rel="stylesheet" href="../Recurso/Css/dashboard_docente.css">
+    <!-- Estilos específicos de esta página -->
     <link rel="stylesheet" href="../Recurso/Css/NuevoProyecto.css">
 </head>
 
 <body>
-    <script type="module" src="../JavaScript/sessionCheck.js"></script>
-    <script type="module" src="../JavaScript/NuevoProyecto.js"></script>
 
-    <div class="container">
-        <h1>Registrar Nuevo Proyecto</h1>
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar topbar-docente">
+        <div class="navbar-left">
+            <img src="../Recurso/img/logo.png" class="logo" alt="Logo institucional">
 
-        <form id="formProyecto">
-
-            <label>Título del Proyecto *</label>
-            <input type="text" id="titulo" placeholder="Ej: Sistema para monitoreo de cultivos" required>
-
-            <label>Tipo de Proyecto *</label>
-            <select id="tipoProyecto" required>
-                <option value="">Cargando tipos...</option>
-            </select>
-
-            <label>Línea de Investigación *</label>
-            <select id="lineaInvestigacion" required>
-                <option value="">Cargando líneas...</option>
-            </select>
-
-            <label>Objetivo General</label>
-            <textarea id="objetivo_general" placeholder="Describe el objetivo general"></textarea>
-
-            <label>Beneficiarios</label>
-            <textarea id="beneficiarios" placeholder="Quiénes se beneficiarán"></textarea>
-
-            <div class="fechas">
-                <div>
-                    <label>Fecha Inicio *</label>
-                    <input type="date" id="fecha_inicio" required>
-                </div>
-
-                <div>
-                    <label>Fecha Fin *</label>
-                    <input type="date" id="fecha_fin" required>
-                </div>
+            <div class="navbar-titles">
+                <h2>Investigación Docente</h2>
+                <span class="navbar-subtitle">Gestión de proyectos y avances</span>
             </div>
 
-            <button type="submit" id="btnRegistrar">Registrar Proyecto</button>
-            <button type="button" id="btnLimpiar">Limpiar</button>
+            <nav class="menu" aria-label="Navegación principal">
+                <a href="../Vistas/docente_dashboard.html">Inicio</a>
+                <a href="../Vistas/NuevoProyecto.html" class="active">Nuevo Proyecto</a>
+                <a href="perfil.html">Mi Perfil</a>
+            </nav>
+        </div>
 
-        </form>
-    </div>
+        <div class="navbar-right">
+            <span id="nombreDocenteNavbar" class="navbar-user">Docente</span>
+            <img src="../Recurso/img/usuario.png" class="avatar" alt="Foto del usuario">
+            <button id="btnCerrarSesion" class="btn-cerrar" type="button">
+                <i class="fa fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </header>
 
+    <!-- ================= CONTENIDO PRINCIPAL ================= -->
+    <section class="content">
+
+        <section class="seccion tarjeta">
+            <header class="form-header">
+                <h1>Registrar Nuevo Proyecto</h1>
+                <p class="form-subtitle">
+                    Completa la información requerida para registrar tu proyecto de investigación.
+                    Los campos marcados con <span class="required">*</span> son obligatorios.
+                </p>
+            </header>
+
+            <form id="formProyecto" novalidate>
+
+                <!-- TÍTULO -->
+                <div class="form-group">
+                    <label for="titulo">
+                        Título del Proyecto <span class="required">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="titulo"
+                        placeholder="Ejemplo: Sistema para monitoreo de cultivos"
+                        required
+                        autocomplete="off"
+                    >
+                    <small class="help-text">
+                        Escribe un título claro y representativo del proyecto.
+                    </small>
+                </div>
+
+                <!-- TIPO DE PROYECTO -->
+                <div class="form-group">
+                    <label for="tipoProyecto">
+                        Tipo de Proyecto (aplicada o innovación) <span class="required">*</span>
+                    </label>
+                    <select id="tipoProyecto" required>
+                        <option value="">Seleccione una opción...</option>
+                        <!-- Se llenará dinámicamente desde JavaScript -->
+                    </select>
+                </div>
+
+                <!-- LÍNEA DE INVESTIGACIÓN -->
+                <div class="form-group">
+                    <label for="lineaInvestigacion">
+                        Línea de Investigación <span class="required">*</span>
+                    </label>
+                    <select id="lineaInvestigacion" required>
+                        <option value="">Seleccione una opción...</option>
+                        <!-- Se llenará dinámicamente desde JavaScript -->
+                    </select>
+                </div>
+
+                <!-- INTEGRANTES -->
+                <div class="form-group">
+                    <label for="integrantes">
+                        Integrante o integrantes <span class="required">*</span>
+                    </label>
+                    <textarea
+                        id="integrantes"
+                        rows="2"
+                        placeholder="Indica el nombre del docente y/o integrantes del proyecto"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- OBJETIVO GENERAL -->
+                <div class="form-group">
+                    <label for="objetivo_general">
+                        Objetivo del proyecto <span class="required">*</span>
+                    </label>
+                    <textarea
+                        id="objetivo_general"
+                        rows="3"
+                        placeholder="Describe el objetivo general del proyecto"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- BENEFICIARIOS -->
+                <div class="form-group">
+                    <label for="beneficiarios">
+                        Beneficiarios <span class="required">*</span>
+                    </label>
+                    <textarea
+                        id="beneficiarios"
+                        rows="3"
+                        placeholder="Indica quiénes se beneficiarán con el proyecto"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- LOCALIZACIÓN -->
+                <div class="form-group">
+                    <label for="localizacion">
+                        Localización <span class="required">*</span>
+                    </label>
+                    <textarea
+                        id="localizacion"
+                        rows="2"
+                        placeholder="Ejemplo: Facultad de Ingeniería, UPLA – Huancayo"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- FECHAS -->
+                <div class="fechas-grid">
+                    <div class="form-group">
+                        <label for="fecha_inicio">
+                            Fecha de Inicio <span class="required">*</span>
+                        </label>
+                        <input type="date" id="fecha_inicio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_fin">
+                            Fecha de Fin <span class="required">*</span>
+                        </label>
+                        <input type="date" id="fecha_fin" required>
+                    </div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="form-actions">
+                    <button type="submit" id="btnRegistrar" class="btn-primary">
+                        Registrar Proyecto
+                    </button>
+
+                    <button type="button" id="btnLimpiar" class="btn-secondary">
+                        Limpiar
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+    </section>
+
+    <!-- ================= SCRIPTS ================= -->
+    <script type="module" src="../JavaScript/aplicar_tema_global.js"></script>
+    <script type="module" src="../JavaScript/sessionCheck.js"></script>
+    <script type="module" src="../JavaScript/NuevoProyecto.js"></script>
 </body>
 </html>

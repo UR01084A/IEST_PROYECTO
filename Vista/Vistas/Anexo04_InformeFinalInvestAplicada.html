@@ -1,240 +1,621 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>ANEXO 04 – Informe Final Investigación Aplicada</title>
-<link rel="stylesheet" href="../Recurso/Css/evaluar_form.css">
+    <meta charset="UTF-8">
+    <title>ANEXO 04 – Informe Final de Investigación Aplicada</title>
+
+    <!-- Estilos generales del formulario -->
+    <link rel="stylesheet" href="../Recurso/Css/evaluar_form.css">
 </head>
 <body>
 
-<h2>ANEXO 04 – Informe Final de Investigación Aplicada</h2>
+<main class="anexo-container">
 
-<form id="formAnexo04">
+    <!-- ENCABEZADO -->
+    <header class="anexo-header">
+        <h1>ANEXO 04</h1>
+        <h2>Informe Final de Investigación Aplicada</h2>
+        <p class="anexo-descripcion">
+            Complete los criterios marcando <strong>Sí</strong> o <strong>No</strong>. 
+            Al finalizar, haga clic en <strong>Guardar evaluación</strong> para enviar la calificación al sistema.
+        </p>
+        <hr>
+    </header>
+
+    <form id="formAnexo04" class="anexo-form">
+
+        <!-- ============================ -->
+        <!-- I. DATOS GENERALES -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>I. Datos generales</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c1">1. Datos completos del proyecto</label>
+                    <select id="c1" name="c1">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c2">2. Docente responsable correctamente consignado</label>
+                    <select id="c2" name="c2">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c3">3. Línea de investigación bien definida</label>
+                    <select id="c3" name="c3">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c4">4. Beneficiarios correctamente descritos</label>
+                    <select id="c4" name="c4">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- II. RESUMEN -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>II. Resumen del proyecto</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c5">5. El resumen es claro y coherente</label>
+                    <select id="c5" name="c5">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c6">6. Incluye objetivos y metodología</label>
+                    <select id="c6" name="c6">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c7">7. Presenta los principales resultados sintetizados</label>
+                    <select id="c7" name="c7">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- III. INTRODUCCIÓN -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>III. Introducción</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c8">8. Introducción clara del problema de investigación</label>
+                    <select id="c8" name="c8">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c9">9. Antecedentes bien desarrollados y pertinentes</label>
+                    <select id="c9" name="c9">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c10">10. Justificación coherente y suficiente</label>
+                    <select id="c10" name="c10">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c11">11. Objetivos alineados con el problema y la justificación</label>
+                    <select id="c11" name="c11">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- IV. METODOLOGÍA -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>IV. Metodología</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c12">12. Diseño metodológico correctamente definido</label>
+                    <select id="c12" name="c12">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c13">13. Población y muestra adecuadas al estudio</label>
+                    <select id="c13" name="c13">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c14">14. Técnicas de recolección de datos correctas</label>
+                    <select id="c14" name="c14">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c15">15. Instrumentos debidamente validados</label>
+                    <select id="c15" name="c15">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c16">16. Procesamiento de datos adecuado</label>
+                    <select id="c16" name="c16">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c17">17. Métodos estadísticos bien aplicados</label>
+                    <select id="c17" name="c17">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- V. RESULTADOS -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>V. Resultados</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c18">18. Presentación clara de los resultados</label>
+                    <select id="c18" name="c18">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c19">19. Tablas correctamente elaboradas</label>
+                    <select id="c19" name="c19">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c20">20. Figuras o gráficos pertinentes y claros</label>
+                    <select id="c20" name="c20">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c21">21. Interpretación adecuada de los resultados</label>
+                    <select id="c21" name="c21">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c22">22. Coherencia entre resultados y objetivos planteados</label>
+                    <select id="c22" name="c22">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- VI. DISCUSIÓN -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>VI. Discusión</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c23">23. Discusión pertinente y bien estructurada</label>
+                    <select id="c23" name="c23">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c24">24. Contrasta resultados con investigaciones previas</label>
+                    <select id="c24" name="c24">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c25">25. Expone claramente el aporte del estudio</label>
+                    <select id="c25" name="c25">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- VII. CONCLUSIONES -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>VII. Conclusiones</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c26">26. Conclusiones coherentes con los resultados</label>
+                    <select id="c26" name="c26">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c27">27. Conclusiones claramente derivadas de los objetivos</label>
+                    <select id="c27" name="c27">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- VIII. RECOMENDACIONES -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>VIII. Recomendaciones</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c28">28. Recomendaciones pertinentes al contexto</label>
+                    <select id="c28" name="c28">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c29">29. Recomendaciones basadas en las conclusiones</label>
+                    <select id="c29" name="c29">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- IX. REFERENCIAS -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>IX. Referencias</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c30">30. Uso correcto del formato APA 7</label>
+                    <select id="c30" name="c30">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c31">31. Todas las citas en el texto figuran en las referencias</label>
+                    <select id="c31" name="c31">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c32">32. Referencias actualizadas y pertinentes</label>
+                    <select id="c32" name="c32">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- X. ANEXOS -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>X. Anexos</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c33">33. Anexos completos y ordenados</label>
+                    <select id="c33" name="c33">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c34">34. Tablas complementarias necesarias</label>
+                    <select id="c34" name="c34">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c35">35. Instrumentos aplicados correctamente anexados</label>
+                    <select id="c35" name="c35">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- XI. EVALUACIÓN TÉCNICA -->
+        <!-- ============================ -->
+        <section class="anexo-bloque">
+            <h3>XI. Evaluación técnica</h3>
+            <div class="preguntas">
+
+                <div class="campo">
+                    <label for="c36">36. Redacción clara y comprensible</label>
+                    <select id="c36" name="c36">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c37">37. Ortografía adecuada</label>
+                    <select id="c37" name="c37">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c38">38. Uso correcto del formato institucional</label>
+                    <select id="c38" name="c38">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c39">39. Coherencia estructural del documento</label>
+                    <select id="c39" name="c39">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c40">40. Consistencia teórica</label>
+                    <select id="c40" name="c40">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c41">41. Calidad de los anexos</label>
+                    <select id="c41" name="c41">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c42">42. Cumplimiento de los objetivos planteados</label>
+                    <select id="c42" name="c42">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c43">43. Aplicabilidad de los resultados</label>
+                    <select id="c43" name="c43">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c44">44. Impacto potencial del estudio</label>
+                    <select id="c44" name="c44">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c45">45. Innovación metodológica</label>
+                    <select id="c45" name="c45">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c46">46. Originalidad del estudio</label>
+                    <select id="c46" name="c46">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="c47">47. Cumple la estructura general exigida</label>
+                    <select id="c47" name="c47">
+                        <option value="">Seleccione</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- BOTÓN DE ENVÍO -->
+        <div class="anexo-acciones">
+            <button id="btnEnviar" type="submit" class="btn-guardar">
+                Guardar evaluación
+            </button>
+        </div>
+
+    </form>
+</main>
 
 <!-- ===================================== -->
-<!-- I. DATOS GENERALES -->
+<!-- SCRIPT: CÁLCULO + ENVÍO POR postMessage -->
 <!-- ===================================== -->
-<h3>I. Datos Generales</h3>
-<div class="preguntas">
-    <label>1. Datos completos del proyecto</label>
-    <select name="c1"><option value="1">Sí</option><option value="0">No</option></select>
+<script>
+document.getElementById("formAnexo04").addEventListener("submit", function(e){
+    e.preventDefault();
 
-    <label>2. Docente responsable correctamente consignado</label>
-    <select name="c2"><option value="1">Sí</option><option value="0">No</option></select>
+    const btn = document.getElementById("btnEnviar");
+    btn.disabled = true;
+    btn.textContent = "Enviando...";
 
-    <label>3. Línea de investigación bien definida</label>
-    <select name="c3"><option value="1">Sí</option><option value="0">No</option></select>
+    const TOTAL = 47;
+    const form = new FormData(e.target);
+    let suma = 0;
 
-    <label>4. Beneficiarios descritos</label>
-    <select name="c4"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
+    for (let i = 1; i <= TOTAL; i++) {
+        const val = Number(form.get("c" + i));
+        if (!isNaN(val)) suma += val;
+    }
 
+    const nota = Math.round((suma / TOTAL) * 20);
 
-<!-- ===================================== -->
-<!-- II. RESUMEN -->
-<!-- ===================================== -->
-<h3>II. Resumen del Proyecto</h3>
-<div class="preguntas">
-    <label>5. Resumen claro y coherente</label>
-    <select name="c5"><option value="1">Sí</option><option value="0">No</option></select>
+    const observaciones = 
+        nota >= 11 
+        ? "Informe aprobado según los criterios establecidos."
+        : "Informe desaprobado. Se recomienda revisar los criterios no cumplidos.";
 
-    <label>6. Incluye objetivos y metodología</label>
-    <select name="c6"><option value="1">Sí</option><option value="0">No</option></select>
+    parent.postMessage(
+        {
+            tipo: "evaluacion",
+            nota,
+            observaciones,
+            puntaje_total: suma,
+            detalles: {
+                tipo: "informe",
+                total_criterios: TOTAL,
+                puntaje: suma,
+                evaluado_en: new Date().toISOString()
+            }
+        },
+        "*"
+    );
 
-    <label>7. Presenta resultados sintetizados</label>
-    <select name="c7"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- III. INTRODUCCIÓN -->
-<!-- ===================================== -->
-<h3>III. Introducción</h3>
-<div class="preguntas">
-    <label>8. Introducción clara del problema</label>
-    <select name="c8"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>9. Antecedentes bien desarrollados</label>
-    <select name="c9"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>10. Justificación coherente</label>
-    <select name="c10"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>11. Objetivos alineados</label>
-    <select name="c11"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- IV. METODOLOGÍA -->
-<!-- ===================================== -->
-<h3>IV. Metodología</h3>
-<div class="preguntas">
-    <label>12. Diseño metodológico correcto</label>
-    <select name="c12"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>13. Población y muestra adecuadas</label>
-    <select name="c13"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>14. Técnicas de recolección correctas</label>
-    <select name="c14"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>15. Instrumentos validados</label>
-    <select name="c15"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>16. Procesamiento de datos adecuado</label>
-    <select name="c16"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>17. Métodos estadísticos bien aplicados</label>
-    <select name="c17"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- V. RESULTADOS -->
-<!-- ===================================== -->
-<h3>V. Resultados</h3>
-<div class="preguntas">
-    <label>18. Presentación clara de resultados</label>
-    <select name="c18"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>19. Tablas correctas</label>
-    <select name="c19"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>20. Figuras correctas</label>
-    <select name="c20"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>21. Interpretación adecuada</label>
-    <select name="c21"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>22. Coherencia entre resultados y objetivos</label>
-    <select name="c22"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- VI. DISCUSIÓN -->
-<!-- ===================================== -->
-<h3>VI. Discusión</h3>
-<div class="preguntas">
-    <label>23. Discusión correcta</label>
-    <select name="c23"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>24. Contraste con investigaciones previas</label>
-    <select name="c24"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>25. Aporte del estudio</label>
-    <select name="c25"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- VII. CONCLUSIONES -->
-<!-- ===================================== -->
-<h3>VII. Conclusiones</h3>
-<div class="preguntas">
-    <label>26. Conclusiones coherentes</label>
-    <select name="c26"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>27. Conclusiones derivadas de resultados</label>
-    <select name="c27"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- VIII. RECOMENDACIONES -->
-<!-- ===================================== -->
-<h3>VIII. Recomendaciones</h3>
-<div class="preguntas">
-    <label>28. Recomendaciones pertinentes</label>
-    <select name="c28"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>29. Basadas en conclusiones</label>
-    <select name="c29"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- IX. REFERENCIAS -->
-<!-- ===================================== -->
-<h3>IX. Referencias</h3>
-<div class="preguntas">
-    <label>30. Formato APA 7 correcto</label>
-    <select name="c30"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>31. Todas las citas están en referencias</label>
-    <select name="c31"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>32. Referencias actualizadas</label>
-    <select name="c32"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- X. ANEXOS -->
-<!-- ===================================== -->
-<h3>X. Anexos</h3>
-<div class="preguntas">
-    <label>33. Anexos completos</label>
-    <select name="c33"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>34. Tablas complementarias</label>
-    <select name="c34"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>35. Instrumentos aplicados</label>
-    <select name="c35"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-
-<!-- ===================================== -->
-<!-- XI. EVALUACIÓN TÉCNICA -->
-<!-- ===================================== -->
-<h3>XI. Evaluación Técnica</h3>
-<div class="preguntas">
-    <label>36. Redacción clara</label>
-    <select name="c36"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>37. Ortografía adecuada</label>
-    <select name="c37"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>38. Formato institucional correcto</label>
-    <select name="c38"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>39. Coherencia estructural</label>
-    <select name="c39"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>40. Consistencia teórica</label>
-    <select name="c40"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>41. Calidad de anexos</label>
-    <select name="c41"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>42. Cumplimiento de objetivos</label>
-    <select name="c42"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>43. Aplicabilidad de resultados</label>
-    <select name="c43"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>44. Impacto potencial</label>
-    <select name="c44"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>45. Innovación metodológica</label>
-    <select name="c45"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>46. Originalidad del estudio</label>
-    <select name="c46"><option value="1">Sí</option><option value="0">No</option></select>
-
-    <label>47. Cumple estructura general</label>
-    <select name="c47"><option value="1">Sí</option><option value="0">No</option></select>
-</div>
-
-<hr>
-
-<button type="submit">Guardar Evaluación</button>
-
-</form>
-
-<script src="../JavaScript/evaluar_anexo04.js"></script>
+    alert("Evaluación enviada correctamente.");
+    btn.textContent = "Enviado ✔";
+});
+</script>
 
 </body>
 </html>

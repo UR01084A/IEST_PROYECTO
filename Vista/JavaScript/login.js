@@ -8,15 +8,15 @@ const domainSpan = document.getElementById("domain");
 
 // 🔹 Dominios automáticos según tipo de usuario
 const dominios = {
-  admin: "@administrador.edu.pe",
-  jefe: "@evaluador.edu.pe",
-  docente: "@usuario.edu.pe",
+  admin: "@institutocajasAdmin.edu.pe",
+  jefe: "@institutocajasEvaluador.edu.pe",
+  docente: "@institutocajas.edu.pe",
 };
 
 // 🔹 Actualizar dominio automáticamente
 emailInput.addEventListener("input", () => {
   const valor = emailInput.value.trim().toLowerCase();
-  domainSpan.textContent = dominios[valor] || "@usuario.edu.pe";
+  domainSpan.textContent = dominios[valor] || "@institutocajas.edu.pe";
 });
 
 // 🔹 Unir el usuario + dominio
@@ -83,5 +83,5 @@ btnIngresar.addEventListener("click", async () => {
 btnCancelar.addEventListener("click", () => {
   emailInput.value = "";
   passwordInput.value = "";
-  domainSpan.textContent = "@usuario.edu.pe";
+  domainSpan.textContent = "@institutocajas.edu.pe";
 });

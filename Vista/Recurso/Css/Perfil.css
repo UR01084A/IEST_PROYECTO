@@ -1,194 +1,360 @@
 /* ============================================================
-   GLOBAL
+   RESETEO BÁSICO / GLOBAL
 ============================================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
 }
 
+html,
 body {
-    background: #f4f6fa;
-    color: #333;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f3f5fb;
+    color: #1f2933;
+}
+
+/* Asegurar que botones, inputs, etc. usen la misma fuente */
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
 }
 
 /* ============================================================
-   HEADER / NAVBAR
+   NAVBAR (alineado con dashboard_docente)
 ============================================================ */
-.header {
+.navbar {
     width: 100%;
-    background: white;
-    padding: 14px 30px;
+    padding: 12px 28px;
+    background: #ffffff;
+    border-bottom: 1px solid #e3e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e5e5e5;
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: #007bff;
+    width: 40px;
+    height: auto;
+    object-fit: contain;
 }
 
+/* Títulos del módulo */
+.navbar-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.navbar-titles h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.navbar-subtitle {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Menú */
 .menu {
     display: flex;
-    gap: 25px;
+    gap: 16px;
+    margin-left: 26px;
 }
 
 .menu a {
     text-decoration: none;
-    font-size: 16px;
     font-weight: 600;
-    color: #444;
+    font-size: 14px;
+    color: #64748b;
     padding-bottom: 4px;
-    transition: 0.2s;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
 .menu a:hover {
-    color: #007bff;
+    color: #2563eb;
+    transform: translateY(-1px);
 }
 
-.menu .active {
-    color: #007bff;
-    border-bottom: 3px solid #007bff;
+.menu a.active,
+.menu a[aria-current="page"] {
+    color: #2563eb;
+    border-color: #2563eb;
 }
 
-.usuario {
+/* Lado derecho (usuario) */
+.navbar-right {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.logout {
-    background: #ff4b4b;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
+.navbar-user {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
 }
 
-.logout:hover {
-    background: #d63a3a;
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+/* Botón cerrar sesión */
+.btn-cerrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    padding: 7px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.35);
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-cerrar i {
+    font-size: 14px;
+}
+
+.btn-cerrar:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+
+.btn-cerrar:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.3);
 }
 
 /* ============================================================
-   CONTENEDOR PRINCIPAL
+   CONTENEDOR PRINCIPAL DEL PERFIL
 ============================================================ */
 .perfil-container {
     width: 100%;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 1100px;
+    margin: 32px auto 40px;
+    padding: 0 18px;
 }
 
+/* Título principal */
 .titulo {
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    color: #1e3a8a;
-    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #1d4ed8;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.perfil-container > p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 22px;
 }
 
 /* ============================================================
    TARJETA DEL PERFIL
 ============================================================ */
 .perfil-card {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
+    background: #ffffff;
+    padding: 26px 28px;
+    border-radius: 18px;
     display: flex;
-    gap: 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    gap: 32px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
 }
 
+/* ============================================================
+   SECCIÓN FOTO DE PERFIL
+============================================================ */
 .foto-section {
-    width: 35%;
-    text-align: center;
+    width: 30%;
+    min-width: 230px;
+    border-right: 1px solid #e5e7eb;
+    padding-right: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 14px;
 }
 
-.foto-section img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
+.foto-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 999px;
+    padding: 4px;
+    background: linear-gradient(135deg, #2563eb, #22c55e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.foto-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
     object-fit: cover;
-    border: 4px solid #007bff;
+    background: #e5e7eb;
 }
 
+/* Botón para elegir foto */
 .btnFoto {
-    background: #007bff;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
     display: inline-block;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
+.btnFoto:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45);
+}
+
+/* Input de archivo escondido */
 .btnFoto input {
     display: none;
 }
 
-.btnGuardarFoto {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btnGuardarFoto:hover {
-    background: #1e7e34;
+/* Nota de formatos */
+.nota-formato {
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+    max-width: 220px;
 }
 
 /* ============================================================
-   DATOS DEL USUARIO
+   SECCIÓN DE DATOS DEL USUARIO
 ============================================================ */
 .data-section {
-    width: 65%;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
-.data-section label {
+/* Grupo de campo */
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field-group label {
+    font-size: 13px;
     font-weight: 600;
+    color: #374151;
 }
 
-.data-section input {
+/* Inputs */
+.field-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
+    padding: 9px 11px;
     border-radius: 10px;
-    font-size: 15px;
-    background: #f1f5ff;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    background: #f9fafb;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+/* Solo el campo de nueva contraseña será editable, pero el estilo es el mismo */
+.field-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+    background: #ffffff;
+}
+
+/* Inputs deshabilitados con estilo */
+.field-group input:disabled {
+    background: #f3f4f6;
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+/* Línea divisoria */
+.perfil-divider {
+    margin: 12px 0 8px;
+    border: none;
+    border-top: 1px dashed #e5e7eb;
+}
+
+/* Texto de ayuda bajo el input de nueva contraseña */
+.help-text {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* ============================================================
+   BOTÓN GUARDAR
+============================================================ */
+.acciones-perfil {
+    margin-top: 6px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .btnGuardar {
-    background: #28a745;
-    color: white;
-    padding: 12px;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
     border: none;
-    font-size: 16px;
+    padding: 9px 18px;
+    border-radius: 999px;
     cursor: pointer;
+    font-size: 14px;
     font-weight: 600;
-    margin-top: 10px;
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.45);
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btnGuardar:hover {
-    background: #1e7e34;
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(34, 197, 94, 0.5);
+}
+
+.btnGuardar:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 14px rgba(34, 197, 94, 0.4);
+}
+
+/* Estado deshabilitado (cuando pongas loading desde JS) */
+.btnGuardar:disabled {
+    opacity: 0.75;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
 }
 
 /* ============================================================
@@ -197,30 +363,56 @@ body {
 @media (max-width: 900px) {
     .perfil-card {
         flex-direction: column;
+        padding: 22px 20px;
+    }
+
+    .foto-section {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        padding-right: 0;
+        padding-bottom: 18px;
+    }
+
+    .data-section {
+        padding-top: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding-inline: 16px;
+    }
+
+    .menu {
+        display: none; /* si quieres luego puedes reemplazar por menú hamburguesa */
+    }
+
+    .perfil-container {
+        padding-inline: 14px;
+    }
+
+    .titulo {
+        font-size: 22px;
         text-align: center;
     }
 
-    .foto-section, 
-    .data-section {
-        width: 100%;
-    }
-
-    .data-section input {
+    .perfil-container > p {
         text-align: center;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 480px) {
     .perfil-card {
-        padding: 25px;
+        padding: 18px 14px;
     }
 
-    .foto-section img {
+    .foto-wrapper {
         width: 130px;
         height: 130px;
     }
 
-    .titulo {
-        font-size: 26px;
+    .navbar-titles h2 {
+        font-size: 17px;
     }
 }

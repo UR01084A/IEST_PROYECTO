@@ -1,276 +1,643 @@
-/* ======================================================
-   ESTILOS GENERALES
-====================================================== */
-
+/* ==========================================================
+   RESETEO BÁSICO
+========================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+:root {
+    --color-primario: #0d6efd;
+    --color-primario-oscuro: #0b5ed7;
+    --color-peligro: #ff4b4b;
+    --color-peligro-oscuro: #dc3545;
+    --color-exito: #28a745;
+    --color-fondo: #f4f6fa;
+    --color-texto: #222;
+    --radio-base: 12px;
+    --sombra-suave: 0 2px 6px rgba(0,0,0,0.06);
+    --sombra-media: 0 8px 25px rgba(0,0,0,0.18);
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
 body {
-    background: #f5f7fa;
-    color: #333;
+    background: var(--color-fondo);
+    color: var(--color-texto);
 }
 
-/* ======================================================
+/* ==========================================================
    NAVBAR
-====================================================== */
-
+========================================================== */
 .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     width: 100%;
-    background: #ffffff;
-    padding: 15px 25px;
+    padding: 10px 26px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #e5e5e5;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 22px;
 }
 
-.navbar-left .logo {
-    height: 45px;
+.logo {
+    width: 42px;
+    height: 42px;
 }
 
 .navbar-left h2 {
     font-size: 20px;
     font-weight: 700;
+    color: #1f2937;
+}
+
+.menu {
+    display: flex;
+    gap: 18px;
+    margin-left: 10px;
 }
 
 .menu a {
-    margin-left: 15px;
-    text-decoration: none;
-    font-size: 15px;
-    color: #444;
+    position: relative;
+    font-size: 14px;
     font-weight: 600;
-    padding: 5px 10px;
+    text-decoration: none;
+    color: #6b7280;
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
 }
 
-.menu a.active {
-    border-bottom: 2px solid #007bff;
-    color: #007bff;
+.menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    border-radius: 999px;
+    background: var(--color-primario);
+    transition: width 0.2s ease;
+}
+
+.menu a:hover {
+    color: var(--color-primario);
+}
+
+.menu .active {
+    color: var(--color-primario);
+}
+
+.menu .active::after {
+    width: 100%;
 }
 
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    font-size: 14px;
+    color: #4b5563;
 }
 
 .avatar {
-    height: 42px;
-    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+/* botón genérico modal + cerrar sesión */
+.btn-modal,
+.btn-cerrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.12);
 }
 
 .btn-cerrar {
-    padding: 7px 15px;
-    background: #ff4d4d;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
+    background: var(--color-peligro);
+    color: #fff;
 }
 
-/* ======================================================
-   CONTENIDO GENERAL
-====================================================== */
+.btn-cerrar:hover {
+    background: var(--color-peligro-oscuro);
+    transform: translateY(-1px);
+}
 
+.btn-cerrar:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ==========================================================
+   CONTENIDO PRINCIPAL
+========================================================== */
 .content {
-    padding: 25px;
+    width: 100%;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
 }
 
 .seccion {
-    margin-bottom: 30px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .tarjeta {
-    background: white;
-    padding: 20px 25px;
-    border-radius: 12px;
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.08);
+    background: #fff;
+    padding: 22px 26px;
+    border-radius: var(--radio-base);
+    box-shadow: var(--sombra-suave);
 }
 
-.titulo-seccion {
-    font-size: 20px;
-    margin-bottom: 15px;
+.tarjeta-bienvenida {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#bienvenidaTexto {
+    font-size: 26px;
     font-weight: 700;
+    color: #111827;
 }
 
-/* ======================================================
-   TABLAS
-====================================================== */
+.texto-intro {
+    font-size: 14px;
+    color: #6b7280;
+}
 
+/* Títulos de secciones */
+.titulo-seccion {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 14px;
+}
+
+/* ==========================================================
+   TABLAS
+========================================================== */
 .tabla-responsive {
+    width: 100%;
     overflow-x: auto;
-    margin-top: 15px;
 }
 
 .tabla {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
     font-size: 14px;
 }
 
 .tabla thead {
-    background: #007bff;
-    color: white;
+    background: var(--color-primario);
+    color: #fff;
 }
 
-.tabla thead th {
-    padding: 12px;
-    font-weight: 700;
-    text-align: left;
-}
-
-.tabla tbody td {
+.tabla th,
+.tabla td {
     padding: 10px 12px;
-    border-bottom: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.tabla tbody tr:nth-child(even) {
+    background: #f9fafb;
 }
 
 .tabla tbody tr:hover {
-    background: #f0f7ff;
+    background: #eef4ff;
 }
 
-/* ======================================================
-   BOTONES
-====================================================== */
-
-.btn-accion {
-    padding: 7px 12px;
-    border-radius: 7px;
-    border: none;
-    cursor: pointer;
+/* DataTables ajustes en español */
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
     font-size: 13px;
+    color: #4b5563;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+.dataTables_wrapper .dataTables_info {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.dataTables_wrapper .dataTables_paginate a {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+/* ==========================================================
+   ESTADOS
+========================================================== */
+.estado-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
     font-weight: 600;
-    color: white;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.estado-enviado {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.estado-evaluado {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.estado-observado {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ==========================================================
+   BOTONES DE ACCIÓN (tablas)
+========================================================== */
+.btn-accion {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
 }
 
+.btn-accion i {
+    font-size: 13px;
+}
+
+/* Colores por tipo */
 .btn-ver {
-    background: #007bff;
+    background: #2563eb;
 }
-
-.btn-evaluar {
-    background: #8e44ad;
-}
-
-.btn-informe {
-    background: #00a86b;
+.btn-ver:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
 }
 
 .btn-print {
-    background: #28a745;
+    background: #7c3aed;
+}
+.btn-print:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
 }
 
 .btn-archivo {
-    background: #1e90ff;
+    background: #059669;
+}
+.btn-archivo:hover {
+    background: #047857;
+    transform: translateY(-1px);
 }
 
-.btn-accion:hover {
-    opacity: 0.85;
+.btn-informe {
+    background: #ea580c;
+}
+.btn-informe:hover {
+    background: #c2410c;
+    transform: translateY(-1px);
 }
 
-/* ======================================================
-   BADGES / ESTADOS
-====================================================== */
+/* Efecto ripple simple */
+.btn-accion::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.5);
+    opacity: 0;
+    border-radius: 50%;
+    transform: scale(1);
+    pointer-events: none;
+}
 
-.badge {
-    padding: 6px 10px;
-    border-radius: 7px;
-    font-size: 13px;
+.btn-accion:active::after {
+    transform: scale(25);
+    opacity: 0;
+    transition: transform 0.45s ease-out, opacity 0.6s ease-out;
+}
+
+/* ==========================================================
+   INPUTS / SELECTS
+========================================================== */
+label {
+    margin: 10px 0 4px;
     font-weight: 600;
+    font-size: 13px;
+    display: block;
 }
 
-.badge-enviado {
-    background: #d0e7ff;
-    color: #0357a8;
+input[type="file"],
+select {
+    width: 100%;
+    margin-bottom: 14px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    border: 1px solid #d1d5db;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.15s ease, box-shadow 0.15s ease;
+    background: #f9fafb;
 }
 
-.badge-evaluado {
-    background: #d4ffdc;
-    color: #0f7a2d;
+input[type="file"]:focus,
+select:focus {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 1px rgba(13,110,253,0.12);
+    background: #fff;
 }
 
-.badge-observado {
-    background: #ffe4d4;
-    color: #a84300;
+.btn-primary {
+    background: var(--color-primario);
+    color: #fff;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* ======================================================
-   MODAL VISOR PDF / WORD
-====================================================== */
+.btn-primary:hover {
+    background: var(--color-primario-oscuro);
+    transform: translateY(-1px);
+}
 
-.modal-visor {
+/* ==========================================================
+   MODALES (GENÉRICOS)
+========================================================== */
+.modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.55);
-    display: flex;
+    inset: 0;
+    display: none;           /* el JS cambia a flex */
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    padding: 20px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
 }
 
-.visor-box {
-    width: 80%;
-    height: 85%;
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
+.modal-content {
+    background: #fff;
+    border-radius: var(--radio-base);
+    padding: 22px 26px;
+    width: 92%;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: var(--sombra-media);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
-.visor-box iframe {
-    flex-grow: 1;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-}
-
-.btn-cerrar-modal {
-    margin-top: 15px;
-    padding: 10px;
-    background: #ff3b3b;
-    border: none;
-    color: white;
-    border-radius: 7px;
+.modal-header h2 {
+    font-size: 20px;
     font-weight: 700;
-    cursor: pointer;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-/* ======================================================
-   RESPONSIVE
-====================================================== */
+.modal-header h2 i {
+    color: var(--color-primario);
+}
 
-@media (max-width: 860px) {
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+/* variaciones por tipo de modal */
+.modal-visor {
+    max-width: 1024px;
+}
+
+.modal-evaluacion {
+    max-width: 1220px;
+}
+
+.modal-proyecto,
+.modal-reporte {
+    max-width: 800px;
+}
+
+/* iframe visor */
+#modalVisor iframe,
+.modal-visor iframe {
+    width: 100%;
+    height: 75vh;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+}
+
+/* ==========================================================
+   LAYOUT EVALUACIÓN (formulario + archivo)
+========================================================== */
+.evaluacion-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 22px;
+}
+
+.evaluacion-col-form,
+.evaluacion-col-archivo {
+    background: #f9fafb;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 14px 16px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.evaluacion-col-form h3,
+.evaluacion-col-archivo h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1f2937;
+}
+
+/* iframe interno del archivo dentro de evaluación */
+.evaluacion-col-archivo iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+}
+
+/* ==========================================================
+   DETALLE PROYECTO / REPORTE
+========================================================== */
+#detalleProyectoContenido p {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #374151;
+}
+
+#detalleProyectoContenido strong {
+    color: #111827;
+}
+
+/* espacio interno del reporte embebido si lo usas en modalReporte */
+#contenidoReporte {
+    font-size: 14px;
+    color: #111827;
+}
+
+/* ==========================================================
+   ANIMACIÓN
+========================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+@media (max-width: 1024px) {
+    .content {
+        padding: 20px;
+    }
+
+    .evaluacion-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        padding: 18px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 16px;
+    }
+
     .navbar-left h2 {
         display: none;
     }
+
+    .menu {
+        display: none;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .tarjeta {
+        padding: 18px 16px;
+    }
+
+    #bienvenidaTexto {
+        font-size: 22px;
+    }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
     .btn-accion {
-        padding: 6px 9px;
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .tabla th,
+    .tabla td {
+        padding: 8px;
         font-size: 12px;
     }
 
-    .visor-box {
-        width: 95%;
-        height: 90%;
+    .modal-content {
+        padding: 16px 14px;
     }
+}
+
+
+/* Barra del Jefe de Unidad: fondo = color de cabecera del tema,
+   texto SIEMPRE blanco (o lo que diga --color-header-text) */
+.topbar-jefe {
+  background: var(--color-header-bg, #065f46);
+  color: var(--color-header-text, #ffffff);
+}
+
+/* Título, links del menú y zona derecha en blanco */
+.topbar-jefe h1,
+.topbar-jefe h2,
+.topbar-jefe .menu a,
+.topbar-jefe .navbar-right,
+.topbar-jefe .navbar-right span,
+.topbar-jefe .navbar-right i {
+  color: var(--color-header-text, #ffffff) !important;
+}
+
+/* Botón “Cerrar sesión” en rojo pero texto blanco */
+.topbar-jefe .btn-cerrar {
+  background-color: #e11d48;
+  border-color: #e11d48;
+  color: #ffffff !important;
 }
