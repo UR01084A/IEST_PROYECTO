@@ -427,9 +427,7 @@ function renderizarProyectos() {
         <td>${p.estado}</td>
         <td>${p.fecha_inicio ?? "-"}</td>
         <td>${p.fecha_fin ?? "-"}</td>
-        <td>${p.objetivo_general ?? "-"}</td>
-        <td>${p.beneficiarios ?? "-"}</td>
-        <td>${p.localizacion ?? "-"}</td>
+       
         <td>
           <button class="btn-accion btn-ver btn-ver-proyecto" data-id="${p.id}">
             <i class="fa fa-eye"></i> Ver
@@ -804,3 +802,4 @@ function actualizarMetricas() {
       proyectos.filter((p) => p.estado === "aprobado").length;
   }
 }
+
